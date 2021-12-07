@@ -6,6 +6,13 @@ Todos management app
 
 ### Primary
 
+- configure ENV
+
+  - eslint
+  - prettier
+
+- setup redux flow
+- setup services and api layer
 - Render lists
   - CRUD
 - Render todos
