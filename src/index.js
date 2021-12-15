@@ -16,6 +16,8 @@ import reportWebVitals from "./reportWebVitals";
 import ListsPage from "./pages/ListsPage";
 import TodosPage from "./pages/TodosPage";
 import NotFoundPage from "./pages/NotFoundPage";
+import AboutPage from "./pages/AboutPage";
+import ConfigurationPage from "./pages/ConfigurationPage";
 
 ReactDOM.render(
   <Provider store={store}>
@@ -27,7 +29,9 @@ ReactDOM.render(
             <Route path="/" element={<App />}>
               <Route index element={<ListsPage />} />
               <Route path="list/:listId" element={<TodosPage />} />
-              {/* Login, Register, About */}
+              <Route path="about" element={<AboutPage />} />
+              <Route path="configuration" element={<ConfigurationPage />} />
+              {/* Login, Register */}
             </Route>
             <Route path="*" element={<NotFoundPage />} />
           </Routes>

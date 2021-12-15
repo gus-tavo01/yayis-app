@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 import {
   AppBar,
@@ -8,14 +8,17 @@ import {
   IconButton,
   Menu,
   MenuItem,
+  ListItemIcon,
+  Avatar,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
+import InfoIcon from "@mui/icons-material/Info";
+import SettingsIcon from "@mui/icons-material/Settings";
+
+import logoSrc from "../logo.svg";
 
 const useStyles = makeStyles(() => ({
-  title: {
-    flexGrow: 1,
-  },
   link: {
     textDecoration: "none",
     color: "inherit",
@@ -27,23 +30,33 @@ const AppNav = () => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
+  const handleMenu = (event) => setAnchorEl(event.currentTarget);
+
+  const closeMenu = () => setAnchorEl(null);
+
+  const handleConfigurationClick = () => {
+    closeMenu();
+    navigate("/configuration", { state: { pageName: "Configuration" } });
   };
 
   const handleAboutClick = () => {
-    navigate("/about");
+    closeMenu();
+    navigate("/about", { state: { pageName: "About" } });
   };
 
   return (
     <>
-      <AppBar position="fixed" sx={{ flexGrow: 1 }}>
-        <Toolbar>
+      <AppBar position="fixed">
+        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
           <Typography variant="h6" component="label" className={classes.title}>
             <Link className={classes.link} to="/">
-              Lists
+              <Avatar src={logoSrc} alt="Todo App" />
             </Link>
+          </Typography>
+          <Typography variant="h6" component="label">
+            {location.state?.pageName || "Lists"}
           </Typography>
           <div>
             <IconButton onClick={handleMenu} color="inherit">
@@ -52,7 +65,7 @@ const AppNav = () => {
             <Menu
               anchorEl={anchorEl}
               open={Boolean(anchorEl)}
-              onClose={() => setAnchorEl(null)}
+              onClose={closeMenu}
               anchorOrigin={{
                 vertical: "bottom",
                 horizontal: "center",
@@ -62,7 +75,18 @@ const AppNav = () => {
                 horizontal: "center",
               }}
             >
-              <MenuItem onClick={handleAboutClick}>About</MenuItem>
+              <MenuItem onClick={handleConfigurationClick}>
+                <ListItemIcon>
+                  <SettingsIcon color="inherit" />
+                </ListItemIcon>
+                Configuration
+              </MenuItem>
+              <MenuItem onClick={handleAboutClick}>
+                <ListItemIcon>
+                  <InfoIcon color="inherit" />
+                </ListItemIcon>
+                About
+              </MenuItem>
             </Menu>
           </div>
         </Toolbar>

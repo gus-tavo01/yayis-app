@@ -1,8 +1,6 @@
 import React from "react";
 import { Outlet, useLocation } from "react-router-dom";
 
-import Box from "@mui/material/Box";
-
 import AppNav from "./components/AppNav";
 import TodosNav from "./components/TodosNav";
 
@@ -15,9 +13,7 @@ const App = () => {
   return (
     <>
       {!isTodosPage ? <AppNav /> : <TodosNav />}
-      <Box>
-        <Outlet />
-      </Box>
+      <Outlet />
     </>
   );
 };

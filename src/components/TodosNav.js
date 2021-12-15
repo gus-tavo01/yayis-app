@@ -8,10 +8,13 @@ import {
   IconButton,
   Menu,
   MenuItem,
+  ListItemIcon,
 } from "@mui/material";
 
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import KeyboardArrowLeftOutlinedIcon from "@mui/icons-material/KeyboardArrowLeftOutlined";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const ListsNav = () => {
   const params = useParams();
@@ -74,8 +77,18 @@ const ListsNav = () => {
                 horizontal: "center",
               }}
             >
-              <MenuItem onClick={handleOnEdit}>Edit</MenuItem>
-              <MenuItem onClick={handleOnDelete}>Delete</MenuItem>
+              <MenuItem onClick={handleOnEdit}>
+                <ListItemIcon>
+                  <EditIcon />
+                </ListItemIcon>
+                Edit
+              </MenuItem>
+              <MenuItem onClick={handleOnDelete}>
+                <ListItemIcon>
+                  <DeleteIcon />
+                </ListItemIcon>
+                Delete
+              </MenuItem>
             </Menu>
           </div>
         </Toolbar>
