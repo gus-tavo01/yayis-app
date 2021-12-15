@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.js": "/yayis-app/static/js/main.d4b67cc4.chunk.js",
-    "main.js.map": "/yayis-app/static/js/main.d4b67cc4.chunk.js.map",
+    "main.js": "/yayis-app/static/js/main.95dbc047.chunk.js",
+    "main.js.map": "/yayis-app/static/js/main.95dbc047.chunk.js.map",
     "runtime-main.js": "/yayis-app/static/js/runtime-main.178fab64.js",
     "runtime-main.js.map": "/yayis-app/static/js/runtime-main.178fab64.js.map",
-    "static/js/2.a42f2e1a.chunk.js": "/yayis-app/static/js/2.a42f2e1a.chunk.js",
-    "static/js/2.a42f2e1a.chunk.js.map": "/yayis-app/static/js/2.a42f2e1a.chunk.js.map",
+    "static/js/2.72dd6288.chunk.js": "/yayis-app/static/js/2.72dd6288.chunk.js",
+    "static/js/2.72dd6288.chunk.js.map": "/yayis-app/static/js/2.72dd6288.chunk.js.map",
     "static/js/3.ebbfbd82.chunk.js": "/yayis-app/static/js/3.ebbfbd82.chunk.js",
     "static/js/3.ebbfbd82.chunk.js.map": "/yayis-app/static/js/3.ebbfbd82.chunk.js.map",
     "index.html": "/yayis-app/index.html",
-    "static/js/2.a42f2e1a.chunk.js.LICENSE.txt": "/yayis-app/static/js/2.a42f2e1a.chunk.js.LICENSE.txt",
+    "static/js/2.72dd6288.chunk.js.LICENSE.txt": "/yayis-app/static/js/2.72dd6288.chunk.js.LICENSE.txt",
     "static/media/logo.6ce24c58.svg": "/yayis-app/static/media/logo.6ce24c58.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.178fab64.js",
-    "static/js/2.a42f2e1a.chunk.js",
-    "static/js/main.d4b67cc4.chunk.js"
+    "static/js/2.72dd6288.chunk.js",
+    "static/js/main.95dbc047.chunk.js"
   ]
 }
