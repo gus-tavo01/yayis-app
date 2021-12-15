@@ -24,7 +24,7 @@ ReactDOM.render(
     <React.StrictMode>
       <Themed>
         <CssBaseline />
-        <BrowserRouter>
+        <BrowserRouter basename={process.env.REACT_APP_NAME}>
           <Routes>
             <Route path="/" element={<App />}>
               <Route index element={<ListsPage />} />
