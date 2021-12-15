@@ -19,6 +19,9 @@ import NotFoundPage from "./pages/NotFoundPage";
 import AboutPage from "./pages/AboutPage";
 import ConfigurationPage from "./pages/ConfigurationPage";
 
+console.log("# env variables");
+console.log(process.env);
+
 ReactDOM.render(
   <Provider store={store}>
     <React.StrictMode>
