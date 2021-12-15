@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.js": "/yayis-app/static/js/main.cd5109e9.chunk.js",
-    "main.js.map": "/yayis-app/static/js/main.cd5109e9.chunk.js.map",
+    "main.js": "/yayis-app/static/js/main.7d254501.chunk.js",
+    "main.js.map": "/yayis-app/static/js/main.7d254501.chunk.js.map",
     "runtime-main.js": "/yayis-app/static/js/runtime-main.178fab64.js",
     "runtime-main.js.map": "/yayis-app/static/js/runtime-main.178fab64.js.map",
     "static/js/2.72dd6288.chunk.js": "/yayis-app/static/js/2.72dd6288.chunk.js",
@@ -15,6 +15,6 @@
   "entrypoints": [
     "static/js/runtime-main.178fab64.js",
     "static/js/2.72dd6288.chunk.js",
-    "static/js/main.cd5109e9.chunk.js"
+    "static/js/main.7d254501.chunk.js"
   ]
 }
