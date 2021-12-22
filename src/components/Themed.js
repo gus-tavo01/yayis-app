@@ -1,9 +1,9 @@
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { useSelector } from "react-redux";
+import useConfiguration from "../hooks/useConfiguration";
 
 const Themed = ({ children }) => {
-  const theme = useSelector((store) => store.configuration.theme);
-  const appTheme = createTheme(theme || {});
+  const { theme } = useConfiguration();
+  const appTheme = createTheme(theme);
   return <ThemeProvider theme={appTheme}>{children}</ThemeProvider>;
 };
 
