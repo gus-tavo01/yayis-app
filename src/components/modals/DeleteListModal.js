@@ -7,12 +7,12 @@ import {
   Button,
 } from "@mui/material";
 
-const DeleteListModal = ({ id, name, onCancel, onSubmit, open }) => {
-  const handleOnSubmit = () => onSubmit(id);
+const DeleteListModal = ({ list, onCancel, onSubmit, open }) => {
+  const handleOnSubmit = () => onSubmit(list.id);
 
   return (
     <Dialog open={open}>
-      <DialogTitle>Remove {name}</DialogTitle>
+      <DialogTitle>Remove {list.name}</DialogTitle>
       <DialogContent dividers>
         You are about to delete this list forever.
       </DialogContent>
