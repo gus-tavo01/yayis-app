@@ -14,6 +14,8 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
+import UpdateTodoModal from "./modals/UpdateTodoModal";
+
 const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
@@ -26,22 +28,35 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TodoItem = (todo) => {
+const TodoItem = ({ id, name, description, isDone, onUpdate, onDelete }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
+
+  const [updateTodoOpen, setUpdateTodoOpen] = useState(false);
 
   const closeMenu = () => setAnchorEl(null);
 
   const openMenu = (event) => setAnchorEl(event.currentTarget);
 
-  const handleOnEdit = () => {};
+  const handleOnUpdateClick = () => {
+    closeMenu();
+    setUpdateTodoOpen(true);
+  };
 
-  const handleOnDelete = () => {};
+  const handleOnUpdate = (update) => {
+    setUpdateTodoOpen(false);
+    onUpdate(id, update);
+  };
+
+  const handleOnDeleteClick = () => {
+    closeMenu();
+    onDelete(id);
+  };
 
   return (
     <Box className={classes.container}>
-      <Checkbox color="primary" checked={todo.isDone} />
-      <Typography color="inherit">{todo.name}</Typography>
+      <Checkbox color="primary" checked={isDone} />
+      <Typography color="inherit">{name}</Typography>
       <div>
         <IconButton onClick={openMenu} color="inherit">
           <MoreHorizIcon />
@@ -59,13 +74,13 @@ const TodoItem = (todo) => {
             horizontal: "center",
           }}
         >
-          <MenuItem onClick={handleOnEdit}>
+          <MenuItem onClick={handleOnUpdateClick}>
             <ListItemIcon>
               <EditIcon color="inherit" />
             </ListItemIcon>
             Edit
           </MenuItem>
-          <MenuItem onClick={handleOnDelete}>
+          <MenuItem onClick={handleOnDeleteClick}>
             <ListItemIcon>
               <DeleteIcon color="inherit" />
             </ListItemIcon>
@@ -73,6 +88,13 @@ const TodoItem = (todo) => {
           </MenuItem>
         </Menu>
       </div>
+
+      <UpdateTodoModal
+        open={updateTodoOpen}
+        onCancel={() => setUpdateTodoOpen(false)}
+        onSubmit={handleOnUpdate}
+        todo={{ id, name, description }}
+      />
     </Box>
   );
 };
