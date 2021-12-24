@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import {
   AppBar,
@@ -16,12 +16,17 @@ import KeyboardArrowLeftOutlinedIcon from "@mui/icons-material/KeyboardArrowLeft
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
+import DeleteListModal from "./modals/DeleteListModal";
+import UpdateListModal from "./modals/UpdateListModal";
+
 const ListsNav = () => {
-  const params = useParams();
   const navigate = useNavigate();
-  const { state } = useLocation();
+  const { state: list } = useLocation();
 
   const [anchorEl, setAnchorEl] = useState(null);
+
+  const [deleteListOpen, setDeleteListOpen] = useState(false);
+  const [updateListOpen, setUpdateListOpen] = useState(false);
 
   const handleOnReturn = () => {
     navigate(-1);
@@ -33,22 +38,34 @@ const ListsNav = () => {
 
   const closeMenu = () => setAnchorEl(null);
 
-  const handleOnEdit = () => {
+  const handleOnEditClick = () => {
     closeMenu();
-    // open modal
-    // display edit list form
-    alert(`Edit List ${params.listId}`);
+    setUpdateListOpen(true);
   };
 
-  const handleOnDelete = () => {
+  const handleOnUpdate = (listId, update) => {
+    setUpdateListOpen(false);
+
+    // TODO
+    // dispatch(updateList(listId, update));
+    console.log("## will update", listId);
+    console.log("With ", update);
+  };
+
+  const handleOnDeleteClick = () => {
     closeMenu();
-    // open modal
-    // confirm delete action
-    alert(`Delete List ${params.listId}`);
+    setDeleteListOpen(true);
+  };
+
+  const handleOnDelete = (listId) => {
+    setDeleteListOpen(false);
+
+    // TODO
+    // dispatch(deleteList(listId));
+    console.log("## will delete", listId);
   };
 
   console.log("@@ Todos nav render");
-  console.log(state);
 
   return (
     <>
@@ -58,7 +75,7 @@ const ListsNav = () => {
             <KeyboardArrowLeftOutlinedIcon />
           </IconButton>
           <Typography variant="h6" component="label">
-            {state?.name || "Task"}
+            {(list?.name || "Todos").toUpperCase()}
           </Typography>
           <div>
             <IconButton onClick={handleMenu} color="inherit">
@@ -77,13 +94,13 @@ const ListsNav = () => {
                 horizontal: "center",
               }}
             >
-              <MenuItem onClick={handleOnEdit}>
+              <MenuItem onClick={handleOnEditClick}>
                 <ListItemIcon>
                   <EditIcon />
                 </ListItemIcon>
                 Edit
               </MenuItem>
-              <MenuItem onClick={handleOnDelete}>
+              <MenuItem onClick={handleOnDeleteClick}>
                 <ListItemIcon>
                   <DeleteIcon />
                 </ListItemIcon>
@@ -94,6 +111,18 @@ const ListsNav = () => {
         </Toolbar>
       </AppBar>
       <Toolbar />
+      <DeleteListModal
+        open={deleteListOpen}
+        onCancel={() => setDeleteListOpen(false)}
+        onSubmit={handleOnDelete}
+        name={list.name}
+      />
+      <UpdateListModal
+        open={updateListOpen}
+        onCancel={() => setUpdateListOpen(false)}
+        onSubmit={handleOnUpdate}
+        list={list}
+      />
     </>
   );
 };
