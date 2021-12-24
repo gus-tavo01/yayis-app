@@ -115,7 +115,7 @@ const ListsNav = () => {
         open={deleteListOpen}
         onCancel={() => setDeleteListOpen(false)}
         onSubmit={handleOnDelete}
-        name={list.name}
+        list={list}
       />
       <UpdateListModal
         open={updateListOpen}
