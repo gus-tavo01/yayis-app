@@ -31,7 +31,7 @@ ReactDOM.render(
               <Route path="list/:listId" element={<TodosPage />} />
               <Route path="about" element={<AboutPage />} />
               <Route path="configuration" element={<ConfigurationPage />} />
-              {/* Login, Register */}
+              {/* TODO: Login, Register */}
             </Route>
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
