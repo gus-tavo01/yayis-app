@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import {
   AppBar,
@@ -19,12 +20,15 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import DeleteListModal from "./modals/DeleteListModal";
 import UpdateListModal from "./modals/UpdateListModal";
 
+import { removeList, updateList } from "../redux/slices/lists";
+
 const ListsNav = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { state: list } = useLocation();
+  const [listName, setListName] = useState(list?.name || "List");
 
   const [anchorEl, setAnchorEl] = useState(null);
-
   const [deleteListOpen, setDeleteListOpen] = useState(false);
   const [updateListOpen, setUpdateListOpen] = useState(false);
 
@@ -45,11 +49,8 @@ const ListsNav = () => {
 
   const handleOnUpdate = (listId, update) => {
     setUpdateListOpen(false);
-
-    // TODO
-    // dispatch(updateList(listId, update));
-    console.log("## will update", listId);
-    console.log("With ", update);
+    dispatch(updateList({ id: listId, ...update }));
+    setListName(update.name);
   };
 
   const handleOnDeleteClick = () => {
@@ -59,10 +60,8 @@ const ListsNav = () => {
 
   const handleOnDelete = (listId) => {
     setDeleteListOpen(false);
-
-    // TODO
-    // dispatch(deleteList(listId));
-    console.log("## will delete", listId);
+    dispatch(removeList(listId));
+    navigate("/");
   };
 
   console.log("@@ Todos nav render");
@@ -75,7 +74,7 @@ const ListsNav = () => {
             <KeyboardArrowLeftOutlinedIcon />
           </IconButton>
           <Typography variant="h6" component="label">
-            {(list?.name || "Todos").toUpperCase()}
+            {listName.toUpperCase()}
           </Typography>
           <div>
             <IconButton onClick={handleMenu} color="inherit">
