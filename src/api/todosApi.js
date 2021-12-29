@@ -8,7 +8,7 @@ const errorCb = (error) => {
 
   const payload = error.response?.data || errorPayload;
 
-  console.log("## axios error CB");
+  console.log("## axios err CB");
 
   return payload;
 };
