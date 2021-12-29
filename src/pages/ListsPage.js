@@ -1,30 +1,34 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
-import { Grid, Fab, Box } from "@mui/material";
+import { Grid, Fab, Box, LinearProgress } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import AddIcon from "@mui/icons-material/Add";
 
 import { useSelector, useDispatch } from "react-redux";
-import { getLists } from "../redux/slices/lists";
+import { fetchUserLists, createList } from "../redux/slices/lists";
 
 import ListItem from "../components/ListItem";
+import AddListModal from "../components/modals/AddListModal";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   fab: {
     position: "fixed",
-    top: theme.spacing(6),
-    right: theme.spacing(1),
   },
 }));
 
 const ListsPage = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const auth = useSelector((store) => store.auth);
   const lists = useSelector((store) => store.lists);
 
+  const [modalOpen, setModalOpen] = useState(false);
+
   useEffect(() => {
-    dispatch(getLists({ page: 1, pageSize: 20 }));
-  }, [dispatch]);
+    if (auth.user) {
+      dispatch(fetchUserLists({ page: 1, pageSize: 20 }));
+    }
+  }, [dispatch, auth.user]);
 
   const renderLists = () => {
     const listItems = lists.items?.map((l) => (
@@ -38,7 +42,7 @@ const ListsPage = () => {
         justifyContent="center"
         key={l.id}
       >
-        <ListItem name={l.name} id={l.id} todos={l.todos} />
+        <ListItem name={l.name} id={l.id} todos={l.todos || []} />
       </Grid>
     ));
 
@@ -47,21 +51,33 @@ const ListsPage = () => {
     return listItems;
   };
 
-  const handleOnAdd = () => {
-    console.log("Handle modal open");
+  const handleOnAddClick = () => {
+    setModalOpen(true);
+  };
+
+  const handleOnSubmit = (list) => {
+    if (!list.name || !list.name.length) return;
+    setModalOpen(false);
+    dispatch(createList(list));
   };
 
   console.log("@@ Lists page render");
 
   return (
     <Box>
-      {/* TODO: add loading component */}
-      {lists.loading && "LOADING..."}
+      {lists.loading && <LinearProgress color="secondary" />}
       <Grid container spacing={1} padding={1}>
         {renderLists()}
       </Grid>
+
+      <AddListModal
+        open={modalOpen}
+        onCancel={() => setModalOpen(false)}
+        onSubmit={handleOnSubmit}
+      />
+
       <Box display="flex" justifyContent="flex-end">
-        <Fab onClick={handleOnAdd} color="primary" className={classes.fab}>
+        <Fab onClick={handleOnAddClick} color="primary" className={classes.fab}>
           <AddIcon />
         </Fab>
       </Box>
