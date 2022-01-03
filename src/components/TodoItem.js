@@ -33,7 +33,6 @@ const TodoItem = ({ id, name, description, isDone, onUpdate, onDelete }) => {
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [updateTodoOpen, setUpdateTodoOpen] = useState(false);
-  const [checked, setChecked] = useState(isDone);
 
   const closeMenu = () => setAnchorEl(null);
 
@@ -55,13 +54,12 @@ const TodoItem = ({ id, name, description, isDone, onUpdate, onDelete }) => {
   };
 
   const handleOnCheck = ({ target }) => {
-    setChecked(target.checked);
     onUpdate(id, { isDone: target.checked });
   };
 
   return (
     <Box className={classes.container}>
-      <Checkbox color="default" checked={checked} onChange={handleOnCheck} />
+      <Checkbox color="default" checked={!!isDone} onChange={handleOnCheck} />
       <Typography color="inherit">{name}</Typography>
       <div>
         <IconButton onClick={openMenu} color="inherit">
