@@ -56,7 +56,7 @@ const TodosPage = () => {
   };
 
   const handleOnUpdate = (todoId, update) => {
-    if (!update.name) return;
+    if (update.hasOwnProperty("name") && !update.name) return;
     dispatch(updateTodo({ listId, todoId, ...update }));
     // TODO
     // display toast
