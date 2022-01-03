@@ -55,7 +55,7 @@ const TodoItem = ({ id, name, description, isDone, onUpdate, onDelete }) => {
 
   return (
     <Box className={classes.container}>
-      <Checkbox color="primary" checked={isDone} />
+      <Checkbox color="default" checked={isDone} />
       <Typography color="inherit">{name}</Typography>
       <div>
         <IconButton onClick={openMenu} color="inherit">
