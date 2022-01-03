@@ -30,9 +30,10 @@ const useStyles = makeStyles((theme) => ({
 
 const TodoItem = ({ id, name, description, isDone, onUpdate, onDelete }) => {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = useState(null);
 
+  const [anchorEl, setAnchorEl] = useState(null);
   const [updateTodoOpen, setUpdateTodoOpen] = useState(false);
+  const [checked, setChecked] = useState(isDone);
 
   const closeMenu = () => setAnchorEl(null);
 
@@ -53,9 +54,14 @@ const TodoItem = ({ id, name, description, isDone, onUpdate, onDelete }) => {
     onDelete(id);
   };
 
+  const handleOnCheck = ({ target }) => {
+    setChecked(target.checked);
+    onUpdate(id, { isDone: target.checked });
+  };
+
   return (
     <Box className={classes.container}>
-      <Checkbox color="default" checked={isDone} />
+      <Checkbox color="default" checked={checked} onChange={handleOnCheck} />
       <Typography color="inherit">{name}</Typography>
       <div>
         <IconButton onClick={openMenu} color="inherit">
