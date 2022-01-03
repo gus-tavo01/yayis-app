@@ -37,7 +37,6 @@ const AddTodoModal = ({ open, onCancel, onSubmit }) => {
           placeholder="Todo name"
           onChange={handleOnChange}
           value={inputs.name}
-          variant="filled"
         />
         <InputLabel>Description</InputLabel>
         <TextField
@@ -45,7 +44,6 @@ const AddTodoModal = ({ open, onCancel, onSubmit }) => {
           placeholder="Todo detailed description"
           onChange={handleOnChange}
           value={inputs.description}
-          variant="filled"
           multiline
         />
       </DialogContent>
