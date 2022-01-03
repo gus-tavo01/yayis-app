@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
-import { useLocation } from "react-router";
-import { useSelector } from "react-redux";
+import { useParams } from "react-router";
+import { useSelector, useDispatch } from "react-redux";
 
 import { Box, Fab, LinearProgress } from "@mui/material";
 import { makeStyles } from "@mui/styles";
@@ -9,6 +9,8 @@ import AddIcon from "@mui/icons-material/Add";
 
 import TodoItem from "../components/TodoItem";
 import AddTodoModal from "../components/modals/AddTodoModal";
+
+import { createTodo, updateTodo, removeTodo } from "../redux/slices/lists";
 
 const useStyles = makeStyles((theme) => ({
   fab: {
@@ -20,16 +22,20 @@ const useStyles = makeStyles((theme) => ({
 
 const TodosPage = () => {
   const classes = useStyles();
-  const { state: currentList } = useLocation();
+  const dispatch = useDispatch();
+  const { listId } = useParams();
+
+  const currentList = useSelector((store) =>
+    store.lists.items.find((li) => li.id === listId)
+  );
+  const listsLoading = useSelector((store) => store.lists.loading);
 
   const [addTodoOpen, setAddTodoOpen] = useState(false);
 
-  // TODO:
-  // const todos = useSelector((store) => store.todos);
-  const todos = { loading: false };
-
   const renderTodos = () => {
-    return [{ id: "asdad", name: "test", isDone: true }].map((t) => (
+    if (!currentList.todos) return [];
+
+    return currentList.todos.map((t) => (
       <TodoItem
         key={t.id}
         id={t.id}
@@ -43,29 +49,30 @@ const TodosPage = () => {
   };
 
   const handleOnCreate = (newTodo) => {
-    // TODO
-    // dispatch(createTodo(newTodo));
-    console.log("## on TODO submit", newTodo);
+    if (!newTodo.name) return;
+    setAddTodoOpen(false);
+    dispatch(createTodo({ ...newTodo, listId }));
+    // display toast message
   };
 
   const handleOnUpdate = (todoId, update) => {
+    if (!update.name) return;
+    dispatch(updateTodo({ listId, todoId, ...update }));
     // TODO
-    // dispatch(updateTodo(listId, todoId, update));
-    console.log("# will update ", todoId, update);
+    // display toast
   };
 
   const handleOnDelete = (todoId) => {
+    dispatch(removeTodo({ listId, todoId }));
     // TODO
-    // dispatch(removeTodo(listId, todoId));
-    console.log("# will remove ", todoId);
-    console.log("from ", currentList.id);
+    // display toast
   };
 
   console.log("@@ Todos page render");
 
   return (
     <Box>
-      {todos.loading && <LinearProgress />}
+      {listsLoading && <LinearProgress />}
       {renderTodos()}
 
       <AddTodoModal
