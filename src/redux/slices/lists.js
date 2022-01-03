@@ -80,6 +80,57 @@ export const removeList = createAsyncThunk(
   }
 );
 
+// #region Todos
+export const createTodo = createAsyncThunk(
+  "todos/create",
+  async (todoData, { dispatch, getState }) => {
+    const { auth } = getState();
+
+    if (auth.user) {
+      // const { listId, ...todo } = todoData;
+      dispatch(setLoading(true));
+      // response = service.method(listId, todo);
+      dispatch(setLoading(false));
+      // return { ...response?.payload, listId };
+    }
+
+    return { ...todoData, id: uuid() };
+  }
+);
+export const updateTodo = createAsyncThunk(
+  "todos/update",
+  async (todoData, { dispatch, getState }) => {
+    const { auth } = getState();
+
+    if (auth.user) {
+      dispatch(setLoading(true));
+      // const response = service.method(listId, todoId, update);
+      dispatch(setLoading(false));
+      // return { ...response, listId };
+    }
+    const updateTodo = { ...todoData };
+    updateTodo.id = updateTodo.todoId;
+    delete updateTodo.todoId;
+
+    return updateTodo;
+  }
+);
+export const removeTodo = createAsyncThunk(
+  "todos/remove",
+  async (todoData, { dispatch, getState }) => {
+    const { auth } = getState();
+
+    if (auth.user) {
+      // const { listId, todoId } = todoData;
+      dispatch(setLoading(true));
+      // service.method(listId, todoId);
+      dispatch(setLoading(false));
+    }
+    return todoData;
+  }
+);
+// #endregion Todos
+
 const listsSlice = createSlice({
   name: "lists",
   initialState,
@@ -105,6 +156,27 @@ const listsSlice = createSlice({
     },
     [removeList.fulfilled]: (state, action) => {
       state.items = state.items.filter((l) => l.id !== action.payload);
+    },
+    [createTodo.fulfilled]: (state, action) => {
+      const { listId, ...newTodo } = action.payload;
+      const list = state.items.find((list) => list.id === listId);
+      if (list.todos) list.todos.push(newTodo);
+      else list.todos = [newTodo];
+    },
+    [updateTodo.fulfilled]: (state, action) => {
+      const { listId, ...newTodo } = action.payload;
+      const list = state.items.find((li) => li.id === listId);
+
+      list.todos = list.todos.map((t) => {
+        if (t.id === newTodo.id) return { ...t, ...newTodo };
+        return t;
+      });
+    },
+    [removeTodo.fulfilled]: (state, action) => {
+      const { listId, todoId } = action.payload;
+      const list = state.items.find((li) => li.id === listId);
+
+      list.todos = list.todos.filter((t) => t.id !== todoId);
     },
   },
 });
