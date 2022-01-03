@@ -15,6 +15,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 import UpdateTodoModal from "./modals/UpdateTodoModal";
+import ViewTodoModal from "./modals/ViewTodoModal";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -33,6 +34,7 @@ const TodoItem = ({ id, name, description, isDone, onUpdate, onDelete }) => {
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [updateTodoOpen, setUpdateTodoOpen] = useState(false);
+  const [viewTodoOpen, setViewTodoOpen] = useState(false);
 
   const closeMenu = () => setAnchorEl(null);
 
@@ -57,10 +59,16 @@ const TodoItem = ({ id, name, description, isDone, onUpdate, onDelete }) => {
     onUpdate(id, { isDone: target.checked });
   };
 
+  const handleOnClick = () => {
+    if (description) setViewTodoOpen(true);
+  };
+
   return (
     <Box className={classes.container}>
       <Checkbox color="default" checked={!!isDone} onChange={handleOnCheck} />
-      <Typography color="inherit">{name}</Typography>
+      <Typography color="inherit" onClick={handleOnClick}>
+        {name}
+      </Typography>
       <div>
         <IconButton onClick={openMenu} color="inherit">
           <MoreHorizIcon />
@@ -97,6 +105,11 @@ const TodoItem = ({ id, name, description, isDone, onUpdate, onDelete }) => {
         open={updateTodoOpen}
         onCancel={() => setUpdateTodoOpen(false)}
         onSubmit={handleOnUpdate}
+        todo={{ id, name, description }}
+      />
+      <ViewTodoModal
+        open={viewTodoOpen}
+        onClose={() => setViewTodoOpen(false)}
         todo={{ id, name, description }}
       />
     </Box>
