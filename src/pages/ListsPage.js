@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { Grid, Fab, Box, LinearProgress } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import AddIcon from "@mui/icons-material/Add";
 
 import { useSelector, useDispatch } from "react-redux";
-import { fetchUserLists, createList } from "../redux/slices/lists";
+import { createList } from "../redux/slices/lists";
 
 import ListItem from "../components/ListItem";
 import AddListModal from "../components/modals/AddListModal";
@@ -19,16 +19,9 @@ const useStyles = makeStyles(() => ({
 const ListsPage = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const auth = useSelector((store) => store.auth);
   const lists = useSelector((store) => store.lists);
 
   const [modalOpen, setModalOpen] = useState(false);
-
-  useEffect(() => {
-    if (auth.user) {
-      dispatch(fetchUserLists({ page: 1, pageSize: 20 }));
-    }
-  }, [dispatch, auth.user]);
 
   const renderLists = () => {
     const listItems = lists.items?.map((l) => (
