@@ -1,148 +1,105 @@
 import React, { useState, useEffect } from "react";
 import {
   Box,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
   Button,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  FormControlLabel,
-  Switch,
   Typography,
+  CircularProgress,
+  Stack,
 } from "@mui/material";
-import { ModeEdit, DarkMode } from "@mui/icons-material";
+import { ModeEdit } from "@mui/icons-material";
 
 import { useSelector, useDispatch } from "react-redux";
-import { setConfiguration } from "../redux/actions/configuration";
+
+import UpdateConfigurationModal from "../components/modals/UpdateConfigurationModal";
+
+import { fetchThemes } from "../redux/slices/themes";
+import { fetchLanguages } from "../redux/slices/languages";
+// import { updateConfiguration } from "../redux/slices/configuration";
+
+import useConfiguration from "../hooks/useConfiguration";
 
 const ConfigurationPage = () => {
   const dispatch = useDispatch();
-  const appConfig = useSelector((store) => store.configuration);
-  const { themes, languages, theme, language } = appConfig;
 
-  const [modalOpen, setModalOpen] = useState(false);
-  const [inputs, setInputs] = useState({
-    theme,
-    language,
-    isDarkMode: theme.palette.type === "dark",
-  });
+  const themes = useSelector((store) => store.themes);
+  const languages = useSelector((store) => store.languages);
+
+  const { theme, language } = useConfiguration();
+
+  const [updateModalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
-    // fetch app themes and languages to populate Selects
-    // dispatch(getOptions());
-  }, []);
+    // TODO:
+    // define if options are retrieved in a single action
+    console.log("Fetch app languages and themes");
+    // themes can change
+    dispatch(fetchLanguages({}));
+    dispatch(fetchThemes({}));
+  }, [dispatch]);
 
-  // effect for theme and dark mode changing
-  // update theme
-  useEffect(() => {
-    console.log("$$ effect by changing inputs");
-    dispatch(setConfiguration(inputs));
-  }, [dispatch, inputs]);
+  // effect for language and theme change
+  // useEffect(() => {
+  //   console.log("$$ effect by changing language or theme");
+  //   console.log(inputs);
+  //   dispatch(updateConfiguration(inputs));
+  // }, [dispatch, inputs]);
 
-  const closeModal = () => setModalOpen(false);
+  const handleOnConfigCancel = () => {
+    setModalOpen(false);
 
-  const handleSelectChange = ({ target }, { items }) => {
-    const value = items.find((t) => t.id === target.value);
-    setInputs({ ...inputs, [target.name]: value });
+    // TODO
+    // discard changes
+    // dispatch(updateConfiguration(inputs));
   };
 
-  const handleDarkMode = ({ target }) =>
-    setInputs({ ...inputs, isDarkMode: target.checked });
-
-  const handleOnSubmit = () => closeModal();
+  const handleOnConfigUpdate = () => {
+    // keep configuration
+    setModalOpen(false);
+  };
 
   console.log("@@ Config page render");
 
   return (
-    <Box p={1}>
-      <Box display="flex" justifyContent="flex-end">
+    <Box p={2} display="flex" flexDirection="column">
+      <Stack spacing={2}>
+        <Typography variant="body1">
+          App configuration can be found here.
+        </Typography>
         <Button
+          sx={{ alignSelf: "flex-end" }}
           size="small"
           variant="contained"
-          startIcon={<ModeEdit />}
+          startIcon={
+            themes.loading || languages.loading ? (
+              <CircularProgress size={20} color="primary" />
+            ) : (
+              <ModeEdit />
+            )
+          }
           onClick={() => setModalOpen(true)}
+          disabled={themes.loading || languages.loading}
         >
           Change
         </Button>
-      </Box>
-      <Box display="flex" flexDirection="column">
-        <Typography component="h2" variant="h6">
-          You can change the theme and app language here
-        </Typography>
-        <Typography component="label" variant="label">
-          Theme: {inputs.theme.name}
-        </Typography>
-        <Typography component="label" variant="label">
-          Language: {inputs.language.name}
-        </Typography>
-      </Box>
-      <Dialog open={modalOpen} maxWidth="xs">
-        <DialogTitle>Update Settings</DialogTitle>
-        <DialogContent dividers>
-          <Box display="flex" flexDirection="column">
-            <FormControl margin="dense">
-              <InputLabel id="languageId">Language</InputLabel>
-              <Select
-                labelId="languageId"
-                label="Language"
-                name="language"
-                value={inputs.language.id}
-                onChange={(e) => handleSelectChange(e, languages)}
-              >
-                {languages.items.map((l) => (
-                  <MenuItem key={l.id} value={l.id}>
-                    {l.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <FormControl margin="dense">
-              <InputLabel id="themeId">Theme</InputLabel>
-              <Select
-                labelId="themeId"
-                label="Theme"
-                name="theme"
-                value={inputs.theme.id}
-                onChange={(e) => handleSelectChange(e, themes)}
-              >
-                {themes.items.map((t) => (
-                  <MenuItem key={t.id} value={t.id}>
-                    {t.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <Box display="flex" alignItems="center">
-              <FormControlLabel
-                label="Dark mode"
-                control={
-                  <Switch
-                    checked={inputs.isDarkMode}
-                    onChange={handleDarkMode}
-                  />
-                }
-              />
-              {(inputs.isDarkMode && <DarkMode color="primary" />) || (
-                <DarkMode color="disabled" />
-              )}
-            </Box>
-          </Box>
-        </DialogContent>
-        <DialogActions
-          sx={{ display: "flex", justifyContent: "space-between" }}
-        >
-          <Button color="secondary" variant="text" onClick={closeModal}>
-            Cancel
-          </Button>
-          <Button color="primary" variant="contained" onClick={handleOnSubmit}>
-            Ok
-          </Button>
-        </DialogActions>
-      </Dialog>
+        <Box display="flex" justifyContent="space-between">
+          <Typography variant="subtitle2">Theme:</Typography>
+          <Typography variant="body2">{theme.name}</Typography>
+        </Box>
+        <Box display="flex" justifyContent="space-between">
+          <Typography variant="subtitle2">Language:</Typography>
+          <Typography variant="body2">{language.name}</Typography>
+        </Box>
+      </Stack>
+
+      <UpdateConfigurationModal
+        open={updateModalOpen}
+        onSubmit={handleOnConfigUpdate}
+        onCancel={handleOnConfigCancel}
+        theme={theme}
+        themes={themes.items}
+        language={language}
+        languages={languages.items}
+      />
     </Box>
   );
 };
