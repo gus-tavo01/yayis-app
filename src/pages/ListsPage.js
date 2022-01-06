@@ -10,9 +10,10 @@ import { createList } from "../redux/slices/lists";
 import ListItem from "../components/ListItem";
 import AddListModal from "../components/modals/AddListModal";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   fab: {
-    position: "fixed",
+    right: theme.spacing(2),
+    bottom: theme.spacing(2),
   },
 }));
 
@@ -69,11 +70,14 @@ const ListsPage = () => {
         onSubmit={handleOnSubmit}
       />
 
-      <Box display="flex" justifyContent="flex-end">
-        <Fab onClick={handleOnAddClick} color="primary" className={classes.fab}>
-          <AddIcon />
-        </Fab>
-      </Box>
+      <Fab
+        sx={{ position: "fixed" }}
+        onClick={handleOnAddClick}
+        color="primary"
+        className={classes.fab}
+      >
+        <AddIcon />
+      </Fab>
     </Box>
   );
 };

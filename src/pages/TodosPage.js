@@ -15,8 +15,8 @@ import { createTodo, updateTodo, removeTodo } from "../redux/slices/lists";
 const useStyles = makeStyles((theme) => ({
   fab: {
     position: "fixed",
-    // top: theme.spacing(6),
-    // right: theme.spacing(1),
+    bottom: theme.spacing(2),
+    right: theme.spacing(2),
   },
 }));
 
@@ -81,15 +81,14 @@ const TodosPage = () => {
         onSubmit={handleOnCreate}
       />
 
-      <Box display="flex" justifyContent="flex-end">
-        <Fab
-          onClick={() => setAddTodoOpen(true)}
-          color="primary"
-          className={classes.fab}
-        >
-          <AddIcon />
-        </Fab>
-      </Box>
+      <Fab
+        sx={{ position: "fixed" }}
+        onClick={() => setAddTodoOpen(true)}
+        color="primary"
+        className={classes.fab}
+      >
+        <AddIcon />
+      </Fab>
     </Box>
   );
 };
