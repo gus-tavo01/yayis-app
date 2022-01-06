@@ -14,7 +14,7 @@ import UpdateConfigurationModal from "../components/modals/UpdateConfigurationMo
 
 import { fetchThemes } from "../redux/slices/themes";
 import { fetchLanguages } from "../redux/slices/languages";
-// import { updateConfiguration } from "../redux/slices/configuration";
+import { updateConfiguration } from "../redux/slices/configuration";
 
 import useConfiguration from "../hooks/useConfiguration";
 
@@ -37,23 +37,13 @@ const ConfigurationPage = () => {
     dispatch(fetchThemes({}));
   }, [dispatch]);
 
-  // effect for language and theme change
-  // useEffect(() => {
-  //   console.log("$$ effect by changing language or theme");
-  //   console.log(inputs);
-  //   dispatch(updateConfiguration(inputs));
-  // }, [dispatch, inputs]);
+  // const handleOnLanguageChange = (selectedLanguage) => {};
 
-  const handleOnConfigCancel = () => {
-    setModalOpen(false);
-
-    // TODO
-    // discard changes
-    // dispatch(updateConfiguration(inputs));
+  const handleOnThemeChange = (selectedTheme) => {
+    dispatch(updateConfiguration({ theme: selectedTheme }));
   };
 
-  const handleOnConfigUpdate = () => {
-    // keep configuration
+  const handleOnUpdateClose = () => {
     setModalOpen(false);
   };
 
@@ -93,8 +83,9 @@ const ConfigurationPage = () => {
 
       <UpdateConfigurationModal
         open={updateModalOpen}
-        onSubmit={handleOnConfigUpdate}
-        onCancel={handleOnConfigCancel}
+        onClose={handleOnUpdateClose}
+        onThemeChange={handleOnThemeChange}
+        // onLanguageChange={handleOnLanguageChange}
         theme={theme}
         themes={themes.items}
         language={language}
