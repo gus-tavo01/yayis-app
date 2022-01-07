@@ -35,10 +35,10 @@ const UpdateConfigurationModal = ({
 
   return (
     <Dialog open={open} maxWidth="xs" fullWidth>
-      <DialogTitle>Update App Configuration</DialogTitle>
+      <DialogTitle>Actualizar la configuracion de la app</DialogTitle>
       <DialogContent dividers sx={{ display: "flex", flexDirection: "column" }}>
         <FormControl margin="dense">
-          <InputLabel id="languageId">Language</InputLabel>
+          <InputLabel id="languageId">Lenguage</InputLabel>
           <Select
             disabled
             labelId="languageId"
@@ -55,7 +55,7 @@ const UpdateConfigurationModal = ({
           </Select>
         </FormControl>
         <FormControl margin="dense">
-          <InputLabel id="themeId">Theme</InputLabel>
+          <InputLabel id="themeId">Tema</InputLabel>
           <Select
             labelId="themeId"
             label="Theme"
@@ -73,7 +73,7 @@ const UpdateConfigurationModal = ({
       </DialogContent>
       <DialogActions sx={{ display: "flex", justifyContent: "center" }}>
         <Button color="primary" variant="contained" onClick={onClose}>
-          Close
+          Cerrar
         </Button>
       </DialogActions>
     </Dialog>

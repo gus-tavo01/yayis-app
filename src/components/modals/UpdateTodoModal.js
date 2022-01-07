@@ -30,19 +30,19 @@ const UpdateTodoModal = ({ open, onCancel, onSubmit, todo }) => {
 
   return (
     <Dialog open={open}>
-      <DialogTitle>Update todo</DialogTitle>
+      <DialogTitle>Actualizar todo</DialogTitle>
       <DialogContent dividers>
-        <InputLabel required>Name</InputLabel>
+        <InputLabel required>Nombre</InputLabel>
         <TextField
           name="name"
           placeholder="Todo name"
           onChange={handleOnChange}
           value={inputs.name}
         />
-        <InputLabel>Description</InputLabel>
+        <InputLabel>Descripcion</InputLabel>
         <TextField
           name="description"
-          placeholder="Todo detailed description"
+          placeholder="Descripcion acerca del todo"
           onChange={handleOnChange}
           value={inputs.description}
           multiline
@@ -50,10 +50,10 @@ const UpdateTodoModal = ({ open, onCancel, onSubmit, todo }) => {
       </DialogContent>
       <DialogActions sx={{ display: "flex", justifyContent: "space-between" }}>
         <Button onClick={handleOnCancel} color="secondary" variant="outlined">
-          Cancel
+          Cancelar
         </Button>
         <Button onClick={handleOnSubmit} color="primary" variant="contained">
-          Submit
+          Actualizar
         </Button>
       </DialogActions>
     </Dialog>

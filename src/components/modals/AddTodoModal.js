@@ -33,12 +33,12 @@ const AddTodoModal = ({ open, onCancel, onSubmit }) => {
 
   return (
     <Dialog open={open}>
-      <DialogTitle>Create a new todo</DialogTitle>
+      <DialogTitle>Crear un nuevo todo</DialogTitle>
       <DialogContent dividers>
-        <InputLabel required>Name</InputLabel>
+        <InputLabel required>Nombre</InputLabel>
         <TextField
           name="name"
-          placeholder="Todo name"
+          placeholder="Nombre para este todo"
           onChange={handleOnChange}
           value={inputs.name}
         />
@@ -46,7 +46,7 @@ const AddTodoModal = ({ open, onCancel, onSubmit }) => {
           onClick={() => setHiddenDescription(!hiddenDescription)}
           sx={{ display: "flex", alignItems: "center", marginTop: 1 }}
         >
-          Description
+          Descripcion
           {!hiddenDescription ? (
             <KeyboardArrowDownIcon color="inherit" />
           ) : (
@@ -54,12 +54,12 @@ const AddTodoModal = ({ open, onCancel, onSubmit }) => {
           )}
         </InputLabel>
 
-        {!hiddenDescription && <Divider />}
+        {hiddenDescription && <Divider />}
 
-        {hiddenDescription && (
+        {!hiddenDescription && (
           <TextField
             name="description"
-            placeholder="Todo detailed description"
+            placeholder="Descripcion acerca de este todo"
             onChange={handleOnChange}
             value={inputs.description}
             multiline
@@ -68,10 +68,10 @@ const AddTodoModal = ({ open, onCancel, onSubmit }) => {
       </DialogContent>
       <DialogActions sx={{ display: "flex", justifyContent: "space-between" }}>
         <Button onClick={handleOnCancel} color="secondary" variant="outlined">
-          Cancel
+          Cancelar
         </Button>
         <Button onClick={handleOnSubmit} color="primary" variant="contained">
-          Submit
+          Crear
         </Button>
       </DialogActions>
     </Dialog>

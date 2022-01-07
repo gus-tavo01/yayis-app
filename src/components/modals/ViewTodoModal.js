@@ -19,7 +19,7 @@ const ViewTodoModal = ({ open, onClose, todo }) => {
       </DialogContent>
       <DialogActions sx={{ display: "flex", justifyContent: "center" }}>
         <Button onClick={() => onClose()} color="primary" variant="contained">
-          Ok
+          Cerrar
         </Button>
       </DialogActions>
     </Dialog>

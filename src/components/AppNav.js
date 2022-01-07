@@ -38,12 +38,12 @@ const AppNav = () => {
 
   const handleConfigurationClick = () => {
     closeMenu();
-    navigate("/configuration", { state: { pageName: "Configuration" } });
+    navigate("/configuration", { state: { pageName: "Configuracion" } });
   };
 
   const handleAboutClick = () => {
     closeMenu();
-    navigate("/about", { state: { pageName: "About" } });
+    navigate("/about", { state: { pageName: "Acerca de" } });
   };
 
   return (
@@ -56,7 +56,7 @@ const AppNav = () => {
             </Link>
           </Typography>
           <Typography variant="h6" component="label">
-            {location.state?.pageName || "Lists"}
+            {location.state?.pageName || "Mis listas"}
           </Typography>
           <div>
             <IconButton onClick={handleMenu} color="inherit">
@@ -79,13 +79,13 @@ const AppNav = () => {
                 <ListItemIcon>
                   <SettingsIcon color="inherit" />
                 </ListItemIcon>
-                Configuration
+                Configuracion
               </MenuItem>
               <MenuItem onClick={handleAboutClick}>
                 <ListItemIcon>
                   <InfoIcon color="inherit" />
                 </ListItemIcon>
-                About
+                Acerca de
               </MenuItem>
             </Menu>
           </div>

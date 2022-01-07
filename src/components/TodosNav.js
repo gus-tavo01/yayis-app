@@ -97,13 +97,13 @@ const ListsNav = () => {
                 <ListItemIcon>
                   <EditIcon />
                 </ListItemIcon>
-                Edit
+                Editar
               </MenuItem>
               <MenuItem onClick={handleOnDeleteClick}>
                 <ListItemIcon>
                   <DeleteIcon />
                 </ListItemIcon>
-                Delete
+                Borrar
               </MenuItem>
             </Menu>
           </div>

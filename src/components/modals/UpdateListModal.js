@@ -24,16 +24,16 @@ const UpdateListModal = ({ open, onCancel, onSubmit, list }) => {
 
   return (
     <Dialog open={open}>
-      <DialogTitle>Update list</DialogTitle>
+      <DialogTitle>Actualizar lista</DialogTitle>
       <DialogContent dividers>
         <TextField name="name" value={inputs.name} onChange={handleOnChange} />
       </DialogContent>
       <DialogActions sx={{ display: "flex", justifyContent: "space-between" }}>
         <Button color="secondary" variant="outlined" onClick={onCancel}>
-          Cancel
+          Cancelar
         </Button>
         <Button color="primary" variant="contained" onClick={handleOnSubmit}>
-          Update
+          Actualizar
         </Button>
       </DialogActions>
     </Dialog>

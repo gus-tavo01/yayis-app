@@ -12,16 +12,16 @@ const DeleteListModal = ({ list, onCancel, onSubmit, open }) => {
 
   return (
     <Dialog open={open}>
-      <DialogTitle>Remove {list.name}</DialogTitle>
+      <DialogTitle>Borrar {list.name}</DialogTitle>
       <DialogContent dividers>
-        You are about to delete this list forever.
+        Estas a punto de borrar esta lista de forma permanente
       </DialogContent>
       <DialogActions sx={{ display: "flex", justifyContent: "space-between" }}>
         <Button onClick={onCancel} color="secondary" variant="outlined">
-          Cancel
+          Cancelar
         </Button>
         <Button onClick={handleOnSubmit} color="primary" variant="contained">
-          Delete
+          Borrar
         </Button>
       </DialogActions>
     </Dialog>

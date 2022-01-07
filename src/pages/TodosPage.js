@@ -14,7 +14,6 @@ import { createTodo, updateTodo, removeTodo } from "../redux/slices/lists";
 
 const useStyles = makeStyles((theme) => ({
   fab: {
-    position: "fixed",
     bottom: theme.spacing(2),
     right: theme.spacing(2),
   },

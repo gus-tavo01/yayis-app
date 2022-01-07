@@ -90,13 +90,13 @@ const TodoItem = ({ id, name, description, isDone, onUpdate, onDelete }) => {
             <ListItemIcon>
               <EditIcon color="inherit" />
             </ListItemIcon>
-            Edit
+            Editar
           </MenuItem>
           <MenuItem onClick={handleOnDeleteClick}>
             <ListItemIcon>
               <DeleteIcon color="inherit" />
             </ListItemIcon>
-            Delete
+            Borrar
           </MenuItem>
         </Menu>
       </div>

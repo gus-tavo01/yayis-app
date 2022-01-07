@@ -45,7 +45,7 @@ const ListItem = ({ id, name, todos }) => {
       <Typography fontSize={12}>{name?.toUpperCase()}</Typography>
       <Box>
         <Typography fontSize={12} marginBottom={1}>
-          Finished {finishedTodos.length} of {todos.length}
+          Terminados {finishedTodos.length} de {todos.length}
         </Typography>
         <LinearProgress
           variant="determinate"

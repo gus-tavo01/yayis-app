@@ -29,12 +29,12 @@ const AddListModal = ({ open, onCancel, onSubmit }) => {
 
   return (
     <Dialog open={open}>
-      <DialogTitle>Create a new list</DialogTitle>
+      <DialogTitle>Crear una nueva lista</DialogTitle>
       <DialogContent dividers>
-        <InputLabel required>Name</InputLabel>
+        <InputLabel required>Nombre</InputLabel>
         <TextField
           name="name"
-          placeholder="List name"
+          placeholder="Nombre de la lista"
           onChange={handleOnChange}
           value={listName}
           variant="outlined"
@@ -43,10 +43,10 @@ const AddListModal = ({ open, onCancel, onSubmit }) => {
       </DialogContent>
       <DialogActions sx={{ display: "flex", justifyContent: "space-between" }}>
         <Button onClick={handleOnCancel} color="secondary" variant="outlined">
-          Cancel
+          Cancelar
         </Button>
         <Button onClick={handleOnSubmit} color="primary" variant="contained">
-          Add
+          Crear
         </Button>
       </DialogActions>
     </Dialog>

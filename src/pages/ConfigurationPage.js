@@ -53,8 +53,18 @@ const ConfigurationPage = () => {
     <Box p={2} display="flex" flexDirection="column">
       <Stack spacing={2}>
         <Typography variant="body1">
-          App configuration can be found here.
+          Puedes encontrar la configuracion de la app aqui.
         </Typography>
+
+        <Box display="flex" justifyContent="space-between">
+          <Typography variant="subtitle2">Tema:</Typography>
+          <Typography variant="body2">{theme.name}</Typography>
+        </Box>
+        <Box display="flex" justifyContent="space-between">
+          <Typography variant="subtitle2">Lenguage:</Typography>
+          <Typography variant="body2">{language.name}</Typography>
+        </Box>
+
         <Button
           sx={{ alignSelf: "flex-end" }}
           size="small"
@@ -69,16 +79,8 @@ const ConfigurationPage = () => {
           onClick={() => setModalOpen(true)}
           disabled={themes.loading || languages.loading}
         >
-          Change
+          Cambiar
         </Button>
-        <Box display="flex" justifyContent="space-between">
-          <Typography variant="subtitle2">Theme:</Typography>
-          <Typography variant="body2">{theme.name}</Typography>
-        </Box>
-        <Box display="flex" justifyContent="space-between">
-          <Typography variant="subtitle2">Language:</Typography>
-          <Typography variant="body2">{language.name}</Typography>
-        </Box>
       </Stack>
 
       <UpdateConfigurationModal
