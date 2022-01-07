@@ -6,13 +6,7 @@ const errorCb = (error) => {
     errorMessage: error.toJSON().message,
   };
 
-  const payload = error.response?.data || errorPayload;
-
-  // TODO:
-  // identify and handle when error is from client or server
-  console.log("## axios err CB ", payload);
-
-  return payload;
+  return error.response?.data || errorPayload;
 };
 
 const api = axios.create({
