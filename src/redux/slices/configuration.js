@@ -1,44 +1,41 @@
-import { createSlice } from "@reduxjs/toolkit";
-import configurationActions from "../actions/configuration";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-import defaultTheme from "../../themes/default";
-import secondaryTheme from "../../themes/secondary";
-const defaultLanguage = { id: "defaultId", name: "English" };
+import defaults from "../../constants/defaults";
 
-const initialState = {
-  theme: defaultTheme,
-  language: defaultLanguage,
-  themes: { items: [defaultTheme, secondaryTheme], loading: false },
-  languages: { items: [defaultLanguage], loading: false },
-};
+export const updateConfiguration = createAsyncThunk(
+  "configuration/update",
+  async (update, { dispatch, getState }) => {
+    const { auth } = getState();
+    if (auth.user) {
+      dispatch(setLoading(true));
+      // service.update(user.id, update);
+      dispatch(setLoading(false));
+      // return response?.payload;
+    }
+
+    return update;
+  }
+);
 
 const configurationSlice = createSlice({
   name: "configuration",
-  initialState,
+  initialState: {
+    loading: false,
+    language: defaults.language,
+    theme: defaults.theme,
+  },
   reducers: {
     setLoading: (state, action) => {
       state.loading = action.payload;
     },
-    setTheme: (state, action) => {
-      state.theme = action.payload;
-    },
   },
   extraReducers: {
-    [configurationActions.setConfiguration.fulfilled]: (state, action) => {
-      if (action.payload.theme) state.theme = action.payload.theme;
-      if (action.payload.language) state.language = action.payload.language;
-      state.loading = false;
-
-      console.log("## reducer updating app state");
-      console.log(action.payload);
-    },
-    [configurationActions.fetchConfigOptions.fulfilled]: (state, action) => {
-      state.themes = action.payload.themes;
-      state.languages = action.payload.languages;
-      state.loading = false;
+    [updateConfiguration.fulfilled]: (state, { payload }) => {
+      if (payload.theme) state.theme = payload.theme;
+      if (payload.language) state.language = payload.language;
     },
   },
 });
 
-export const { setTheme } = configurationSlice.actions;
+export const { setLoading } = configurationSlice.actions;
 export default configurationSlice.reducer;
