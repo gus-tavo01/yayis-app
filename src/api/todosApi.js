@@ -8,7 +8,9 @@ const errorCb = (error) => {
 
   const payload = error.response?.data || errorPayload;
 
-  console.log("## axios err CB");
+  // TODO:
+  // identify and handle when error is from client or server
+  console.log("## axios err CB ", payload);
 
   return payload;
 };
