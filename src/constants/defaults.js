@@ -16,7 +16,7 @@ export const theme = {
   },
 };
 
-export const language = { code: "L_SPA", name: "Spanish" };
+export const language = { code: "L_SPA", name: "Español" };
 
 const defaults = { language, theme };
 
