@@ -10,6 +10,7 @@ import {
   MenuItem,
   ListItemIcon,
   Avatar,
+  Divider,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
@@ -119,12 +120,15 @@ const AppNav = () => {
                 Acerca de
               </MenuItem>
               {auth.user && (
-                <MenuItem onClick={handleLogoutClick}>
-                  <ListItemIcon>
-                    <PersonOutlineIcon color="inherit" />
-                  </ListItemIcon>
-                  Logout
-                </MenuItem>
+                <>
+                  <Divider />
+                  <MenuItem onClick={handleLogoutClick}>
+                    <ListItemIcon>
+                      <PersonOutlineIcon color="inherit" />
+                    </ListItemIcon>
+                    Logout
+                  </MenuItem>
+                </>
               )}
             </Menu>
           </div>
