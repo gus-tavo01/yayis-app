@@ -1,8 +1,8 @@
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 const useAuth = () => {
-  // get auth from state state
-  return { user: {} };
+  const auth = useSelector((store) => store.auth);
+  return auth;
 };
 
 export default useAuth;
