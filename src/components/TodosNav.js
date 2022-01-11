@@ -22,6 +22,8 @@ import UpdateListModal from "./modals/UpdateListModal";
 
 import { removeList, updateList } from "../redux/slices/lists";
 
+import useToast from "../hooks/useToast";
+
 const ListsNav = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -31,6 +33,8 @@ const ListsNav = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [deleteListOpen, setDeleteListOpen] = useState(false);
   const [updateListOpen, setUpdateListOpen] = useState(false);
+
+  const toast = useToast();
 
   const handleOnReturn = () => {
     navigate(-1);
@@ -51,6 +55,7 @@ const ListsNav = () => {
     setUpdateListOpen(false);
     dispatch(updateList({ id: listId, ...update }));
     setListName(update.name);
+    toast.success("Lista actualizada correctamente!");
   };
 
   const handleOnDeleteClick = () => {
@@ -62,6 +67,7 @@ const ListsNav = () => {
     setDeleteListOpen(false);
     dispatch(removeList(listId));
     navigate("/");
+    toast.success("Lista borrada con exito!");
   };
 
   console.log("@@ Todos nav render");
