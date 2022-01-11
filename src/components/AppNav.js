@@ -15,8 +15,15 @@ import { makeStyles } from "@mui/styles";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import InfoIcon from "@mui/icons-material/Info";
 import SettingsIcon from "@mui/icons-material/Settings";
+import PersonIcon from "@mui/icons-material/Person";
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 
 import logoSrc from "../logo.svg";
+
+import useAuth from "../hooks/useAuth";
+import { useDispatch } from "react-redux";
+
+import { logout } from "../redux/slices/auth";
 
 const useStyles = makeStyles(() => ({
   link: {
@@ -29,12 +36,19 @@ const AppNav = () => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+  const auth = useAuth();
 
   const handleMenu = (event) => setAnchorEl(event.currentTarget);
 
   const closeMenu = () => setAnchorEl(null);
+
+  const handleLoginClick = () => {
+    closeMenu();
+    navigate("/login", { state: { pageName: "Iniciar sesion" } });
+  };
 
   const handleConfigurationClick = () => {
     closeMenu();
@@ -44,6 +58,12 @@ const AppNav = () => {
   const handleAboutClick = () => {
     closeMenu();
     navigate("/about", { state: { pageName: "Acerca de" } });
+  };
+
+  const handleLogoutClick = () => {
+    closeMenu();
+    dispatch(logout());
+    navigate("/");
   };
 
   return (
@@ -75,6 +95,14 @@ const AppNav = () => {
                 horizontal: "center",
               }}
             >
+              {!auth.user && (
+                <MenuItem onClick={handleLoginClick}>
+                  <ListItemIcon>
+                    <PersonIcon color="inherit" />
+                  </ListItemIcon>
+                  Login
+                </MenuItem>
+              )}
               <MenuItem onClick={handleConfigurationClick}>
                 <ListItemIcon>
                   <SettingsIcon color="inherit" />
@@ -87,6 +115,14 @@ const AppNav = () => {
                 </ListItemIcon>
                 Acerca de
               </MenuItem>
+              {auth.user && (
+                <MenuItem onClick={handleLogoutClick}>
+                  <ListItemIcon>
+                    <PersonOutlineIcon color="inherit" />
+                  </ListItemIcon>
+                  Logout
+                </MenuItem>
+              )}
             </Menu>
           </div>
         </Toolbar>
