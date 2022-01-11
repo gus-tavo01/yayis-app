@@ -12,6 +12,8 @@ import AddTodoModal from "../components/modals/AddTodoModal";
 
 import { createTodo, updateTodo, removeTodo } from "../redux/slices/lists";
 
+import useToast from "../hooks/useToast";
+
 const useStyles = makeStyles((theme) => ({
   fab: {
     bottom: theme.spacing(2),
@@ -30,6 +32,8 @@ const TodosPage = () => {
   const listsLoading = useSelector((store) => store.lists.loading);
 
   const [addTodoOpen, setAddTodoOpen] = useState(false);
+
+  const toast = useToast();
 
   const renderTodos = () => {
     if (!currentList.todos) return [];
@@ -51,20 +55,18 @@ const TodosPage = () => {
     if (!newTodo.name) return;
     setAddTodoOpen(false);
     dispatch(createTodo({ ...newTodo, listId }));
-    // display toast message
+    toast.success("Todo creado con exito!");
   };
 
   const handleOnUpdate = (todoId, update) => {
     if (update.hasOwnProperty("name") && !update.name) return;
     dispatch(updateTodo({ listId, todoId, ...update }));
-    // TODO
-    // display toast
+    toast.success("Todo actualizada con exito");
   };
 
   const handleOnDelete = (todoId) => {
     dispatch(removeTodo({ listId, todoId }));
-    // TODO
-    // display toast
+    toast.success("Todo removida con exito");
   };
 
   console.log("@@ Todos page render");
