@@ -16,6 +16,7 @@ import themesReducer from "./slices/themes";
 import languagesReducer from "./slices/languages";
 import listsReducer from "./slices/lists";
 import configurationReducer from "./slices/configuration";
+import alertsReducer from "./slices/alerts";
 import authReducer from "./slices/auth";
 
 const setStore = () => {
@@ -24,6 +25,7 @@ const setStore = () => {
     themes: themesReducer,
     configuration: configurationReducer,
     lists: listsReducer,
+    alerts: alertsReducer,
     auth: authReducer,
   });
 

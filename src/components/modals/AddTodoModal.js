@@ -41,6 +41,7 @@ const AddTodoModal = ({ open, onCancel, onSubmit }) => {
           placeholder="Nombre para este todo"
           onChange={handleOnChange}
           value={inputs.name}
+          autoFocus
         />
         <InputLabel
           onClick={() => setHiddenDescription(!hiddenDescription)}
