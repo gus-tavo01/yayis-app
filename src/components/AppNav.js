@@ -22,6 +22,7 @@ import logoSrc from "../logo.svg";
 
 import useAuth from "../hooks/useAuth";
 import { useDispatch } from "react-redux";
+import useToast from "../hooks/useToast";
 
 import { logout } from "../redux/slices/auth";
 
@@ -40,6 +41,7 @@ const AppNav = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const auth = useAuth();
+  const toast = useToast();
 
   const handleMenu = (event) => setAnchorEl(event.currentTarget);
 
@@ -63,7 +65,8 @@ const AppNav = () => {
   const handleLogoutClick = () => {
     closeMenu();
     dispatch(logout());
-    navigate("/");
+    navigate("/", { state: { pageName: "Mis listas" } });
+    toast.info("Se ha cerrado la sesion");
   };
 
   return (
