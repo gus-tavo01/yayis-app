@@ -119,16 +119,14 @@ const AppNav = () => {
                 </ListItemIcon>
                 Acerca de
               </MenuItem>
+              {auth.user && <Divider />}
               {auth.user && (
-                <>
-                  <Divider />
-                  <MenuItem onClick={handleLogoutClick}>
-                    <ListItemIcon>
-                      <PersonOutlineIcon color="inherit" />
-                    </ListItemIcon>
-                    Logout
-                  </MenuItem>
-                </>
+                <MenuItem onClick={handleLogoutClick}>
+                  <ListItemIcon>
+                    <PersonOutlineIcon color="inherit" />
+                  </ListItemIcon>
+                  Logout
+                </MenuItem>
               )}
             </Menu>
           </div>
