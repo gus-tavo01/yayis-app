@@ -1,22 +1,28 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-// import authService from '../../services/authService';
-// import usersService from '../../services/usersService';
+import authService from "../../services/authService";
+import usersService from "../../services/usersService";
 
 export const login = createAsyncThunk(
   "auth/login",
   async (credentials, { dispatch }) => {
-    // dispatch(setLoading(true));
-    // const response await authService.login(credentials);
+    dispatch(setLoading(true));
+    const response = await authService.login(credentials);
+    // TODO
     // if (response.errorMessage) {
     //   // dispatch(error);
     //   return null;
     // }
-    // localStorage.setItem("authToken", response?.payload?.token);
-    // usersService.setToken(token);
-    // const getUserResponse = await usersService.get(credentials.email);
-    // if (getUserResponse.errorMessage) { dispatch(error); return null; }
-    // dispatch(setLoading(false));
-    // return getUserResponse?.payload;
+    const { token } = response?.payload;
+    localStorage.setItem("authToken", token);
+    usersService.setToken(token);
+
+    const getUserParams = { email: credentials.email };
+    const getProfileResponse = await usersService.get(getUserParams);
+    // TODO
+    // if (getProfileResponse.errorMessage) { dispatch(error); return null; }
+    const [user] = getProfileResponse.payload?.docs;
+    dispatch(setLoading(false));
+    return user || null;
   }
 );
 
