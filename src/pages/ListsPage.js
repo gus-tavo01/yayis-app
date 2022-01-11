@@ -10,6 +10,8 @@ import { createList } from "../redux/slices/lists";
 import ListItem from "../components/ListItem";
 import AddListModal from "../components/modals/AddListModal";
 
+import useToast from "../hooks/useToast";
+
 const useStyles = makeStyles((theme) => ({
   fab: {
     right: theme.spacing(2),
@@ -23,6 +25,8 @@ const ListsPage = () => {
   const lists = useSelector((store) => store.lists);
 
   const [modalOpen, setModalOpen] = useState(false);
+
+  const toast = useToast();
 
   const renderLists = () => {
     const listItems = lists.items?.map((l) => (
@@ -53,6 +57,7 @@ const ListsPage = () => {
     if (!list.name || !list.name.length) return;
     setModalOpen(false);
     dispatch(createList(list));
+    toast.success("Se ha creado la lista con exito!");
   };
 
   console.log("@@ Lists page render");
