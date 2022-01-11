@@ -2,8 +2,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 // import authService from '../../services/authService';
 // import usersService from '../../services/usersService';
 
-const login = createAsyncThunk(
-  "post/login",
+export const login = createAsyncThunk(
+  "auth/login",
   async (credentials, { dispatch }) => {
     // dispatch(setLoading(true));
     // const response await authService.login(credentials);
@@ -20,11 +20,13 @@ const login = createAsyncThunk(
   }
 );
 
-const logout = createAsyncThunk("", async ({ dispatch }) => {
-  // dispatch(setLoading(true));
-  // localStorage.removeItem("authToken");
-  // dispatch(setLoading(false));
-});
+export const logout = createAsyncThunk(
+  "auth/logout",
+  async (logout, { dispatch }) => {
+    dispatch(setLoading(true));
+    localStorage.removeItem("authToken");
+  }
+);
 
 const authSlice = createSlice({
   name: "auth",
@@ -41,8 +43,9 @@ const authSlice = createSlice({
     [login.fulfilled]: (state, action) => {
       state.user = action.payload;
     },
-    [logout.fulfilled]: (state, action) => {
+    [logout.fulfilled]: (state) => {
       state.user = null;
+      state.loading = false;
     },
   },
 });
