@@ -8,7 +8,7 @@ import { closeAlert } from "../redux/slices/alerts";
 
 const ToastBar = () => {
   const dispatch = useDispatch();
-  const currentBar = useSelector((store) => store.alerts);
+  const currentBar = useSelector((store) => store.alerts.toast);
 
   const handleOnClose = (e, reason) => {
     if (reason !== "clickaway") {

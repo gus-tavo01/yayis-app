@@ -3,24 +3,30 @@ import { createSlice } from "@reduxjs/toolkit";
 const alertsSlice = createSlice({
   name: "alerts",
   initialState: {
-    isOpen: false,
-    message: null,
-    severity: "info",
-    slide: "left",
+    loading: false,
+    toast: {
+      isOpen: false,
+      message: null,
+      severity: "info",
+      slide: "left",
+    },
   },
   reducers: {
-    openAlert: (state, { payload }) => {
-      state.isOpen = true;
-      state.severity = payload.severity;
-      state.message = payload.message;
+    setLoading: (state, { payload }) => {
+      state.loading = payload;
     },
-    closeAlert: (state, action) => {
-      state.isOpen = false;
-      state.severity = "info";
-      state.message = null;
+    openAlert: (state, { payload }) => {
+      state.toast = {
+        isOpen: true,
+        severity: payload.severity,
+        message: payload.message,
+      };
+    },
+    closeAlert: (state) => {
+      state.toast = { isOpen: false, severity: "info", message: null };
     },
   },
 });
 
-export const { openAlert, closeAlert } = alertsSlice.actions;
+export const { openAlert, closeAlert, setLoading } = alertsSlice.actions;
 export default alertsSlice.reducer;
