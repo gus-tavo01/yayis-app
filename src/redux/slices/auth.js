@@ -3,6 +3,8 @@ import authService from "../../services/authService";
 import usersService from "../../services/usersService";
 
 import { setLoading as setAlertsLoading } from "./alerts";
+import { clear as clearLists } from "./lists";
+import { clear as clearConfig } from "./configuration";
 
 export const login = createAsyncThunk(
   "auth/login",
@@ -43,10 +45,8 @@ export const logout = createAsyncThunk(
     dispatch(setAlertsLoading(true));
     localStorage.removeItem("authToken");
 
-    // TODO
-    // clean up user data
-    // lists
-    // configuration
+    dispatch(clearLists());
+    dispatch(clearConfig());
     dispatch(setAlertsLoading(false));
   }
 );
