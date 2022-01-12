@@ -18,7 +18,8 @@ const UpdateListModal = ({ open, onCancel, onSubmit, list }) => {
   const handleOnChange = ({ target }) =>
     setInputs({ ...inputs, [target.name]: target.value });
 
-  const handleOnSubmit = () => {
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
     onSubmit(list.id, inputs);
   };
 
@@ -26,7 +27,13 @@ const UpdateListModal = ({ open, onCancel, onSubmit, list }) => {
     <Dialog open={open}>
       <DialogTitle>Actualizar lista</DialogTitle>
       <DialogContent dividers>
-        <TextField name="name" value={inputs.name} onChange={handleOnChange} />
+        <form onSubmit={handleOnSubmit}>
+          <TextField
+            name="name"
+            value={inputs.name}
+            onChange={handleOnChange}
+          />
+        </form>
       </DialogContent>
       <DialogActions sx={{ display: "flex", justifyContent: "space-between" }}>
         <Button color="secondary" variant="outlined" onClick={onCancel}>

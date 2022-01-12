@@ -22,7 +22,8 @@ const AddListModal = ({ open, onCancel, onSubmit }) => {
     onCancel();
   };
 
-  const handleOnSubmit = () => {
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
     onSubmit({ name: listName });
     setListName("");
   };
@@ -31,15 +32,17 @@ const AddListModal = ({ open, onCancel, onSubmit }) => {
     <Dialog open={open}>
       <DialogTitle>Crear una nueva lista</DialogTitle>
       <DialogContent dividers>
-        <InputLabel required>Nombre</InputLabel>
-        <TextField
-          name="name"
-          placeholder="Nombre de la lista"
-          onChange={handleOnChange}
-          value={listName}
-          variant="outlined"
-          autoFocus
-        />
+        <form onSubmit={handleOnSubmit}>
+          <InputLabel required>Nombre</InputLabel>
+          <TextField
+            name="name"
+            placeholder="Nombre de la lista"
+            onChange={handleOnChange}
+            value={listName}
+            variant="outlined"
+            autoFocus
+          />
+        </form>
       </DialogContent>
       <DialogActions sx={{ display: "flex", justifyContent: "space-between" }}>
         <Button onClick={handleOnCancel} color="secondary" variant="outlined">

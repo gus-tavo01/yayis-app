@@ -26,7 +26,8 @@ const AddTodoModal = ({ open, onCancel, onSubmit }) => {
     onCancel();
   };
 
-  const handleOnSubmit = () => {
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
     onSubmit(inputs);
     resetForm();
   };
@@ -35,37 +36,39 @@ const AddTodoModal = ({ open, onCancel, onSubmit }) => {
     <Dialog open={open}>
       <DialogTitle>Crear un nuevo todo</DialogTitle>
       <DialogContent dividers>
-        <InputLabel required>Nombre</InputLabel>
-        <TextField
-          name="name"
-          placeholder="Nombre para este todo"
-          onChange={handleOnChange}
-          value={inputs.name}
-          autoFocus
-        />
-        <InputLabel
-          onClick={() => setHiddenDescription(!hiddenDescription)}
-          sx={{ display: "flex", alignItems: "center", marginTop: 1 }}
-        >
-          Descripcion
-          {!hiddenDescription ? (
-            <KeyboardArrowDownIcon color="inherit" />
-          ) : (
-            <KeyboardArrowUpIcon color="inherit" />
-          )}
-        </InputLabel>
-
-        {hiddenDescription && <Divider />}
-
-        {!hiddenDescription && (
+        <form onSubmit={handleOnSubmit}>
+          <InputLabel required>Nombre</InputLabel>
           <TextField
-            name="description"
-            placeholder="Descripcion acerca de este todo"
+            name="name"
+            placeholder="Nombre para este todo"
             onChange={handleOnChange}
-            value={inputs.description}
-            multiline
+            value={inputs.name}
+            autoFocus
           />
-        )}
+          <InputLabel
+            onClick={() => setHiddenDescription(!hiddenDescription)}
+            sx={{ display: "flex", alignItems: "center", marginTop: 1 }}
+          >
+            Descripcion
+            {!hiddenDescription ? (
+              <KeyboardArrowDownIcon color="inherit" />
+            ) : (
+              <KeyboardArrowUpIcon color="inherit" />
+            )}
+          </InputLabel>
+
+          {hiddenDescription && <Divider />}
+
+          {!hiddenDescription && (
+            <TextField
+              name="description"
+              placeholder="Descripcion acerca de este todo"
+              onChange={handleOnChange}
+              value={inputs.description}
+              multiline
+            />
+          )}
+        </form>
       </DialogContent>
       <DialogActions sx={{ display: "flex", justifyContent: "space-between" }}>
         <Button onClick={handleOnCancel} color="secondary" variant="outlined">

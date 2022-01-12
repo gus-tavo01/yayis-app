@@ -26,27 +26,32 @@ const UpdateTodoModal = ({ open, onCancel, onSubmit, todo }) => {
     onCancel();
   };
 
-  const handleOnSubmit = () => onSubmit(inputs);
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+    onSubmit(inputs);
+  };
 
   return (
     <Dialog open={open}>
       <DialogTitle>Actualizar todo</DialogTitle>
       <DialogContent dividers>
-        <InputLabel required>Nombre</InputLabel>
-        <TextField
-          name="name"
-          placeholder="Todo name"
-          onChange={handleOnChange}
-          value={inputs.name}
-        />
-        <InputLabel>Descripcion</InputLabel>
-        <TextField
-          name="description"
-          placeholder="Descripcion acerca del todo"
-          onChange={handleOnChange}
-          value={inputs.description}
-          multiline
-        />
+        <form onSubmit={handleOnSubmit}>
+          <InputLabel required>Nombre</InputLabel>
+          <TextField
+            name="name"
+            placeholder="Todo name"
+            onChange={handleOnChange}
+            value={inputs.name}
+          />
+          <InputLabel>Descripcion</InputLabel>
+          <TextField
+            name="description"
+            placeholder="Descripcion acerca del todo"
+            onChange={handleOnChange}
+            value={inputs.description}
+            multiline
+          />
+        </form>
       </DialogContent>
       <DialogActions sx={{ display: "flex", justifyContent: "space-between" }}>
         <Button onClick={handleOnCancel} color="secondary" variant="outlined">
