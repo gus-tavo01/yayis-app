@@ -28,7 +28,14 @@ const configurationSlice = createSlice({
     setLoading: (state, action) => {
       state.loading = action.payload;
     },
-    clear: (state) => {
+    setConfig: (state, action) => {
+      const { payload } = action;
+
+      state.loading = false;
+      state.language = payload?.language || defaults.language;
+      state.theme = payload?.theme || defaults.theme;
+    },
+    clearConfig: (state) => {
       state.loading = false;
       state.language = defaults.language;
       state.theme = defaults.theme;
@@ -42,5 +49,6 @@ const configurationSlice = createSlice({
   },
 });
 
-export const { setLoading, clear } = configurationSlice.actions;
+export const { setLoading, setConfig, clearConfig } =
+  configurationSlice.actions;
 export default configurationSlice.reducer;

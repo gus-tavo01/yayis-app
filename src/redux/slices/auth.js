@@ -3,8 +3,8 @@ import authService from "../../services/authService";
 import usersService from "../../services/usersService";
 
 import { setLoading as setAlertsLoading } from "./alerts";
-import { clear as clearLists } from "./lists";
-import { clear as clearConfig } from "./configuration";
+import { clearLists } from "./lists";
+import { clearConfig, setConfig } from "./configuration";
 
 export const login = createAsyncThunk(
   "auth/login",
@@ -35,6 +35,9 @@ export const login = createAsyncThunk(
     }
 
     const [user = null] = getProfileResponse.payload?.docs;
+
+    dispatch(setConfig(user?.configuration));
+
     return user;
   }
 );
