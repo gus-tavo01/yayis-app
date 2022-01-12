@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-// import PrivateRoute from './components/PrivateRoute';
 
 // redux store
 import { Provider } from "react-redux";
@@ -19,12 +18,13 @@ import TodosPage from "./pages/TodosPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import AboutPage from "./pages/AboutPage";
 import ConfigurationPage from "./pages/ConfigurationPage";
+import LoginPage from "./pages/LoginPage";
 
 const { store, persistor } = configureStore();
 
 ReactDOM.render(
   <Provider store={store}>
-    <PersistGate persistor={persistor} loading={<p>Loading bro</p>}>
+    <PersistGate persistor={persistor} loading={<p>Loading data...</p>}>
       <React.StrictMode>
         <Themed>
           <CssBaseline />
@@ -35,7 +35,7 @@ ReactDOM.render(
                 <Route path="list/:listId" element={<TodosPage />} />
                 <Route path="about" element={<AboutPage />} />
                 <Route path="configuration" element={<ConfigurationPage />} />
-                {/* TODO: Login, Register */}
+                <Route path="login" element={<LoginPage />} />
               </Route>
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
