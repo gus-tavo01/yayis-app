@@ -18,6 +18,8 @@ export const theme = {
 
 export const language = { code: "L_SPA", name: "Español" };
 
-const defaults = { language, theme };
+export const pwdMinLength = 6;
+
+const defaults = { language, theme, pwdMinLength };
 
 export default defaults;
