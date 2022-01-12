@@ -66,7 +66,7 @@ const AppNav = () => {
   const handleLogoutClick = () => {
     closeMenu();
     dispatch(logout());
-    navigate("/", { state: { pageName: "Mis listas" } });
+    navigate("/login", { state: { pageName: "Iniciar sesion" } });
     toast.info("Se ha cerrado la sesion");
   };
 
