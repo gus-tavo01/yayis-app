@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 
 const App = () => {
   const location = useLocation();
-  const authLoading = useSelector((store) => store.auth.loading);
+  const appLoading = useSelector((store) => store.alerts.loading);
   const isTodosPage = location.pathname.includes("/list/");
 
   console.log("@@ App render");
@@ -18,7 +18,7 @@ const App = () => {
   return (
     <>
       {!isTodosPage ? <AppNav /> : <TodosNav />}
-      {authLoading && <LinearProgress color="secondary" />}
+      {appLoading && <LinearProgress color="secondary" />}
       <Outlet />
       <ToastBar />
     </>
