@@ -3,8 +3,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { v4 as uuid } from "uuid";
 import listsService from "../../services/listsService";
 
-const initialState = { loading: false, items: [] };
-
 export const fetchUserLists = createAsyncThunk(
   "lists/fetch",
   async (params, { dispatch, getState }) => {
@@ -13,9 +11,10 @@ export const fetchUserLists = createAsyncThunk(
     } = getState();
 
     dispatch(setLoading(true));
-    const response = await listsService.get(user.id, params);
-    dispatch(setLoading(false));
+    const token = localStorage.getItem("authToken");
+    listsService.setToken(token);
 
+    const response = await listsService.get(user.id, params);
     return response?.payload;
   }
 );
@@ -26,12 +25,10 @@ export const createList = createAsyncThunk(
     const {
       auth: { user },
     } = getState();
+    dispatch(setLoading(true));
 
     if (user) {
-      dispatch(setLoading(true));
       const response = await listsService.create(user.id, list);
-      dispatch(setLoading(false));
-
       return response?.payload;
     }
 
@@ -133,17 +130,23 @@ export const removeTodo = createAsyncThunk(
 
 const listsSlice = createSlice({
   name: "lists",
-  initialState,
+  initialState: { loading: false, items: [] },
   reducers: {
     setLoading: (state, action) => {
       state.loading = action.payload;
+    },
+    clearLists: (state) => {
+      state.items = [];
+      state.loading = false;
     },
   },
   extraReducers: {
     [createList.fulfilled]: (state, action) => {
       state.items.push(action.payload);
+      state.loading = false;
     },
     [fetchUserLists.fulfilled]: (state, action) => {
+      state.loading = false;
       state.items = action.payload?.docs || [];
     },
     [updateList.fulfilled]: (state, action) => {
@@ -181,5 +184,5 @@ const listsSlice = createSlice({
   },
 });
 
-export const { setLoading } = listsSlice.actions;
+export const { setLoading, clearLists } = listsSlice.actions;
 export default listsSlice.reducer;
