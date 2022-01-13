@@ -17,6 +17,7 @@ import { fetchLanguages } from "../redux/slices/languages";
 import { updateConfiguration } from "../redux/slices/configuration";
 
 import useConfiguration from "../hooks/useConfiguration";
+import useToast from "../hooks/useToast";
 
 const ConfigurationPage = () => {
   const dispatch = useDispatch();
@@ -25,7 +26,9 @@ const ConfigurationPage = () => {
   const languages = useSelector((store) => store.languages);
 
   const { theme, language } = useConfiguration();
+  const toast = useToast();
 
+  const [updated, setUpdated] = useState(false);
   const [updateModalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
@@ -37,14 +40,28 @@ const ConfigurationPage = () => {
     dispatch(fetchThemes({}));
   }, [dispatch]);
 
-  // const handleOnLanguageChange = (selectedLanguage) => {};
+  const handleOnLanguageChange = (selectedLanguage) => {
+    dispatch(updateConfiguration({ language: selectedLanguage }));
+    setUpdated(true);
+  };
 
   const handleOnThemeChange = (selectedTheme) => {
     dispatch(updateConfiguration({ theme: selectedTheme }));
+    setUpdated(true);
   };
 
   const handleOnUpdateClose = () => {
     setModalOpen(false);
+
+    if (updated) {
+      toast.success("Los cambios fueron aplicados con exito!");
+      setUpdated(false);
+    }
+  };
+
+  const handleOnChangeClick = () => {
+    setModalOpen(true);
+    setUpdated(false);
   };
 
   console.log("@@ Config page render");
@@ -76,7 +93,7 @@ const ConfigurationPage = () => {
               <ModeEdit />
             )
           }
-          onClick={() => setModalOpen(true)}
+          onClick={handleOnChangeClick}
           disabled={themes.loading || languages.loading}
         >
           Cambiar
@@ -87,7 +104,7 @@ const ConfigurationPage = () => {
         open={updateModalOpen}
         onClose={handleOnUpdateClose}
         onThemeChange={handleOnThemeChange}
-        // onLanguageChange={handleOnLanguageChange}
+        onLanguageChange={handleOnLanguageChange}
         theme={theme}
         themes={themes.items}
         language={language}

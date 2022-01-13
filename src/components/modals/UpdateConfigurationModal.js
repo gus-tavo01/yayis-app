@@ -18,6 +18,7 @@ const UpdateConfigurationModal = ({
   languages,
   theme,
   themes,
+  onlanguagechange,
   onThemeChange,
   onClose,
 }) => {
