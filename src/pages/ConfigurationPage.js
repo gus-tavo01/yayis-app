@@ -32,13 +32,15 @@ const ConfigurationPage = () => {
   const [updateModalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
-    // TODO:
-    // define if options are retrieved in a single action
-    console.log("Fetch app languages and themes");
-    // themes can change
-    dispatch(fetchLanguages({}));
-    dispatch(fetchThemes({}));
-  }, [dispatch]);
+    if (!languages.items.length) {
+      console.log("fetch languages");
+      dispatch(fetchLanguages({}));
+    }
+    if (!themes.items.length) {
+      console.log("fetch themes");
+      dispatch(fetchThemes({}));
+    }
+  }, [dispatch, languages, themes]);
 
   const handleOnLanguageChange = (selectedLanguage) => {
     dispatch(updateConfiguration({ language: selectedLanguage }));
