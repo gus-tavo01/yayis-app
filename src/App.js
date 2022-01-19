@@ -2,7 +2,6 @@ import React from "react";
 import { Outlet, useLocation } from "react-router-dom";
 
 import AppNav from "./components/AppNav";
-import TodosNav from "./components/TodosNav";
 import ToastBar from "./components/ToastBar";
 import { LinearProgress } from "@mui/material";
 
@@ -17,7 +16,7 @@ const App = () => {
 
   return (
     <>
-      {!isTodosPage ? <AppNav /> : <TodosNav />}
+      {!isTodosPage && <AppNav />}
       {appLoading && <LinearProgress color="secondary" />}
       <Outlet />
       <ToastBar />
