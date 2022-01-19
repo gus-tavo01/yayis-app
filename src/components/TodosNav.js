@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import {
@@ -16,23 +16,28 @@ import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import KeyboardArrowLeftOutlinedIcon from "@mui/icons-material/KeyboardArrowLeftOutlined";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import ImageIcon from "@mui/icons-material/Image";
 
 import DeleteListModal from "./modals/DeleteListModal";
 import UpdateListModal from "./modals/UpdateListModal";
+import CreateImageModal from "./modals/CreateImageModal";
 
 import { removeList, updateList } from "../redux/slices/lists";
 
 import useToast from "../hooks/useToast";
 
-const ListsNav = () => {
+import * as htmlToImage from "html-to-image";
+
+import imageFormats from "../constants/imageFormats";
+
+const ListsNav = ({ list }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { state: list } = useLocation();
-  const [listName, setListName] = useState(list?.name || "List");
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [deleteListOpen, setDeleteListOpen] = useState(false);
   const [updateListOpen, setUpdateListOpen] = useState(false);
+  const [createImgOpen, setCreateImgOpen] = useState(false);
 
   const toast = useToast();
 
@@ -54,7 +59,6 @@ const ListsNav = () => {
   const handleOnUpdate = (listId, update) => {
     setUpdateListOpen(false);
     dispatch(updateList({ id: listId, ...update }));
-    setListName(update.name);
     toast.success("Lista actualizada correctamente!");
   };
 
@@ -70,6 +74,47 @@ const ListsNav = () => {
     toast.success("Lista borrada con exito!");
   };
 
+  const handleOnCreateImgClick = () => {
+    closeMenu();
+    setCreateImgOpen(true);
+  };
+
+  const handleOnCreateImg = async (format, nodeRef) => {
+    setCreateImgOpen(false);
+
+    try {
+      // handle image format
+      let convertProcess;
+
+      switch (format) {
+        case imageFormats.jpeg:
+          convertProcess = htmlToImage.toJpeg;
+          break;
+        case imageFormats.png:
+          convertProcess = htmlToImage.toPng;
+          break;
+        case imageFormats.svg:
+          convertProcess = htmlToImage.toSvg;
+          break;
+
+        default:
+          throw new Error("Invalid image format");
+      }
+
+      const dataUrl = await convertProcess(nodeRef, { cacheBust: true });
+      const link = document.createElement("a");
+      link.download = `${list.id}.${format}`;
+      link.href = dataUrl;
+      link.click();
+
+      toast.success("Imagen generada con exito!");
+    } catch (err) {
+      console.log("# error papuh");
+      console.log(err);
+      toast.error("Ha ocurrido un error");
+    }
+  };
+
   console.log("@@ Todos nav render");
 
   return (
@@ -80,7 +125,7 @@ const ListsNav = () => {
             <KeyboardArrowLeftOutlinedIcon />
           </IconButton>
           <Typography variant="h6" component="label">
-            {listName.toUpperCase()}
+            {list.name.toUpperCase()}
           </Typography>
           <div>
             <IconButton onClick={handleMenu} color="inherit">
@@ -111,6 +156,12 @@ const ListsNav = () => {
                 </ListItemIcon>
                 Borrar
               </MenuItem>
+              <MenuItem onClick={handleOnCreateImgClick}>
+                <ListItemIcon>
+                  <ImageIcon />
+                </ListItemIcon>
+                Generar imagen
+              </MenuItem>
             </Menu>
           </div>
         </Toolbar>
@@ -126,6 +177,12 @@ const ListsNav = () => {
         open={updateListOpen}
         onCancel={() => setUpdateListOpen(false)}
         onSubmit={handleOnUpdate}
+        list={list}
+      />
+      <CreateImageModal
+        open={createImgOpen}
+        onCancel={() => setCreateImgOpen(false)}
+        onSubmit={handleOnCreateImg}
         list={list}
       />
     </>
