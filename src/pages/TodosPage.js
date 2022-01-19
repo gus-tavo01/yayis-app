@@ -9,6 +9,7 @@ import AddIcon from "@mui/icons-material/Add";
 
 import TodoItem from "../components/TodoItem";
 import AddTodoModal from "../components/modals/AddTodoModal";
+import TodosNav from "../components/TodosNav";
 
 import { createTodo, updateTodo, removeTodo } from "../redux/slices/lists";
 
@@ -72,9 +73,11 @@ const TodosPage = () => {
   console.log("@@ Todos page render");
 
   return (
-    <Box>
+    <>
+      <TodosNav list={currentList} />
       {listsLoading && <LinearProgress />}
-      {renderTodos()}
+
+      <Box p={1}>{renderTodos()}</Box>
 
       <AddTodoModal
         open={addTodoOpen}
@@ -90,7 +93,7 @@ const TodosPage = () => {
       >
         <AddIcon />
       </Fab>
-    </Box>
+    </>
   );
 };
 
