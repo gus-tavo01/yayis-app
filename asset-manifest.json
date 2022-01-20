@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.js": "/yayis-app/static/js/main.43385352.chunk.js",
-    "main.js.map": "/yayis-app/static/js/main.43385352.chunk.js.map",
-    "runtime-main.js": "/yayis-app/static/js/runtime-main.40fffb99.js",
-    "runtime-main.js.map": "/yayis-app/static/js/runtime-main.40fffb99.js.map",
-    "static/js/2.a8791d31.chunk.js": "/yayis-app/static/js/2.a8791d31.chunk.js",
-    "static/js/2.a8791d31.chunk.js.map": "/yayis-app/static/js/2.a8791d31.chunk.js.map",
-    "static/js/3.447d7484.chunk.js": "/yayis-app/static/js/3.447d7484.chunk.js",
-    "static/js/3.447d7484.chunk.js.map": "/yayis-app/static/js/3.447d7484.chunk.js.map",
+    "main.js": "/yayis-app/static/js/main.53bd4ad7.chunk.js",
+    "main.js.map": "/yayis-app/static/js/main.53bd4ad7.chunk.js.map",
+    "runtime-main.js": "/yayis-app/static/js/runtime-main.0930aa24.js",
+    "runtime-main.js.map": "/yayis-app/static/js/runtime-main.0930aa24.js.map",
+    "static/js/2.a2c5d795.chunk.js": "/yayis-app/static/js/2.a2c5d795.chunk.js",
+    "static/js/2.a2c5d795.chunk.js.map": "/yayis-app/static/js/2.a2c5d795.chunk.js.map",
+    "static/js/3.e91cd469.chunk.js": "/yayis-app/static/js/3.e91cd469.chunk.js",
+    "static/js/3.e91cd469.chunk.js.map": "/yayis-app/static/js/3.e91cd469.chunk.js.map",
     "index.html": "/yayis-app/index.html",
-    "static/js/2.a8791d31.chunk.js.LICENSE.txt": "/yayis-app/static/js/2.a8791d31.chunk.js.LICENSE.txt",
+    "static/js/2.a2c5d795.chunk.js.LICENSE.txt": "/yayis-app/static/js/2.a2c5d795.chunk.js.LICENSE.txt",
     "static/media/logo.6ce24c58.svg": "/yayis-app/static/media/logo.6ce24c58.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.40fffb99.js",
-    "static/js/2.a8791d31.chunk.js",
-    "static/js/main.43385352.chunk.js"
+    "static/js/runtime-main.0930aa24.js",
+    "static/js/2.a2c5d795.chunk.js",
+    "static/js/main.53bd4ad7.chunk.js"
   ]
 }
