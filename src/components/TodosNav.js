@@ -26,9 +26,8 @@ import { removeList, updateList } from "../redux/slices/lists";
 
 import useToast from "../hooks/useToast";
 
-import * as htmlToImage from "html-to-image";
-
-import imageFormats from "../constants/imageFormats";
+import html2canvas from "html2canvas";
+import download from "downloadjs";
 
 const ListsNav = ({ list }) => {
   const dispatch = useDispatch();
@@ -83,35 +82,15 @@ const ListsNav = ({ list }) => {
     setCreateImgOpen(false);
 
     try {
-      // handle image format
-      let convertProcess;
+      const imageType = `image/${format}`;
+      const fileName = `${list.id}.${format}`;
+      const canvas = await html2canvas(nodeRef);
 
-      switch (format) {
-        case imageFormats.jpeg:
-          convertProcess = htmlToImage.toJpeg;
-          break;
-        case imageFormats.png:
-          convertProcess = htmlToImage.toPng;
-          break;
-        case imageFormats.svg:
-          convertProcess = htmlToImage.toSvg;
-          break;
-
-        default:
-          throw new Error("Invalid image format");
-      }
-
-      const dataUrl = await convertProcess(nodeRef, { cacheBust: true });
-      const link = document.createElement("a");
-      link.download = `${list.id}.${format}`;
-      link.href = dataUrl;
-      link.click();
-
+      download(canvas.toDataURL(imageType), fileName);
       toast.success("Imagen generada con exito!");
     } catch (err) {
-      console.log("# error papuh");
-      console.log(err);
       toast.error("Ha ocurrido un error");
+      console.log(err);
     }
   };
 
