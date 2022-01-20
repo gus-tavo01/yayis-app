@@ -17,11 +17,13 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.primary.text,
   },
   name: {
+    paddingLeft: theme.spacing(5),
     color: theme.palette.secondary.main,
   },
   nameChecked: {
-    textDecoration: "line-through",
+    paddingLeft: theme.spacing(5),
     color: theme.palette.secondary.text,
+    textDecoration: "line-through",
     display: "flex",
   },
 }));
