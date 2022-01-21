@@ -100,7 +100,6 @@ const LoginForm = ({ submitDisabled, onSubmit, onEmailBlur, onPwdBlur }) => {
           error={email.error}
           helperText={email.helperText}
           sx={{ marginBottom: 2 }}
-          autofocus
         />
         <InputLabel required>Contraseña</InputLabel>
         <TextField
