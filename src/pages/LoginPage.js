@@ -57,6 +57,7 @@ const LoginPage = () => {
       {auth.loading && <LinearProgress color="secondary" />}
       <Box display="flex" justifyContent="center" alignItems="center">
         <LoginForm
+          submitDisabled={auth.loading}
           onSubmit={handleOnSubmit}
           onEmailBlur={handleOnEmailBlur}
           onPwdBlur={handleOnPwdBlur}

@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 
 const initialValue = { value: "", error: false, helperText: null };
 
-const LoginForm = ({ onSubmit, onEmailBlur, onPwdBlur }) => {
+const LoginForm = ({ submitDisabled, onSubmit, onEmailBlur, onPwdBlur }) => {
   const classes = useStyles();
   const navigate = useNavigate();
 
@@ -35,10 +35,10 @@ const LoginForm = ({ onSubmit, onEmailBlur, onPwdBlur }) => {
   const [pwd, setPwd] = useState(initialValue);
 
   const submitIsDisabled = useMemo(() => {
-    if (email.error || pwd.error) return true;
+    if (email.error || pwd.error || submitDisabled) return true;
 
     return false;
-  }, [email, pwd]);
+  }, [email, pwd, submitDisabled]);
 
   const handleOnEmailChange = ({ target }) => {
     setEmail({ ...email, value: target.value });
@@ -135,7 +135,7 @@ const LoginForm = ({ onSubmit, onEmailBlur, onPwdBlur }) => {
           <Link
             to="/register"
             className={classes.link}
-            state={{ pageName: "Crear una cuenta" }}
+            state={{ pageName: "Crea tu cuenta" }}
           >
             aqui
           </Link>
