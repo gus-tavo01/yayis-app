@@ -61,7 +61,7 @@ const TodosPage = () => {
 
   const handleOnUpdate = (todoId, update) => {
     if (update.hasOwnProperty("name") && !update.name) return;
-    dispatch(updateTodo({ listId, todoId, ...update }));
+    dispatch(updateTodo({ listId, id: todoId, ...update }));
     toast.success("Todo actualizada con exito");
   };
 
