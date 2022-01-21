@@ -3,6 +3,14 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { v4 as uuid } from "uuid";
 import listsService from "../../services/listsService";
 
+// #region auto set token
+const token = localStorage.getItem("authToken");
+
+if (token) {
+  listsService.setToken(token);
+}
+// #endregion auto set token
+
 export const fetchUserLists = createAsyncThunk(
   "lists/fetch",
   async (params, { dispatch, getState }) => {
@@ -11,9 +19,6 @@ export const fetchUserLists = createAsyncThunk(
     } = getState();
 
     dispatch(setLoading(true));
-    const token = localStorage.getItem("authToken");
-    listsService.setToken(token);
-
     const response = await listsService.get(user.id, params);
     return response?.payload;
   }
@@ -84,16 +89,21 @@ export const createTodo = createAsyncThunk(
     const { auth } = getState();
 
     if (auth.user) {
-      // const { listId, ...todo } = todoData;
       dispatch(setLoading(true));
-      // response = service.method(listId, todo);
-      dispatch(setLoading(false));
-      // return { ...response?.payload, listId };
+      const { listId, ...todo } = todoData;
+
+      const createRes = await listsService.addTodo(listId, todo);
+
+      // TODO
+      // handle errors
+
+      return { ...createRes.payload, listId };
     }
 
     return { ...todoData, id: uuid() };
   }
 );
+
 export const updateTodo = createAsyncThunk(
   "todos/update",
   async (todoData, { dispatch, getState }) => {
@@ -101,15 +111,14 @@ export const updateTodo = createAsyncThunk(
 
     if (auth.user) {
       dispatch(setLoading(true));
-      // const response = service.method(listId, todoId, update);
-      dispatch(setLoading(false));
-      // return { ...response, listId };
-    }
-    const updateTodo = { ...todoData };
-    updateTodo.id = updateTodo.todoId;
-    delete updateTodo.todoId;
+      const { listId, id: todoId, ...update } = todoData;
+      await listsService.updateTodo(listId, todoId, update);
 
-    return updateTodo;
+      // TODO
+      // handle errors
+    }
+
+    return todoData;
   }
 );
 export const removeTodo = createAsyncThunk(
@@ -118,11 +127,15 @@ export const removeTodo = createAsyncThunk(
     const { auth } = getState();
 
     if (auth.user) {
-      // const { listId, todoId } = todoData;
+      const { listId, todoId } = todoData;
       dispatch(setLoading(true));
-      // service.method(listId, todoId);
-      dispatch(setLoading(false));
+
+      await listsService.removeTodo(listId, todoId);
+
+      // TODO
+      // handle errors
     }
+
     return todoData;
   }
 );
@@ -163,8 +176,11 @@ const listsSlice = createSlice({
     [createTodo.fulfilled]: (state, action) => {
       const { listId, ...newTodo } = action.payload;
       const list = state.items.find((list) => list.id === listId);
+
       if (list.todos) list.todos.push(newTodo);
       else list.todos = [newTodo];
+
+      state.loading = false;
     },
     [updateTodo.fulfilled]: (state, action) => {
       const { listId, ...newTodo } = action.payload;
@@ -174,12 +190,16 @@ const listsSlice = createSlice({
         if (t.id === newTodo.id) return { ...t, ...newTodo };
         return t;
       });
+
+      state.loading = false;
     },
     [removeTodo.fulfilled]: (state, action) => {
       const { listId, todoId } = action.payload;
       const list = state.items.find((li) => li.id === listId);
 
       list.todos = list.todos.filter((t) => t.id !== todoId);
+
+      state.loading = false;
     },
   },
 });
