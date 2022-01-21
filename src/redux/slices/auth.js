@@ -54,6 +54,29 @@ export const logout = createAsyncThunk(
   }
 );
 
+export const register = createAsyncThunk(
+  "auth/register",
+  async (credentials, { dispatch }) => {
+    dispatch(setLoading(true));
+
+    const registerRes = await authService.register(
+      credentials.email,
+      credentials.password
+    );
+
+    if (registerRes.statusMessage === "Conflict") {
+      dispatch(setError("Ya existe una cuenta asociada a este correo."));
+      return null;
+    }
+
+    if (registerRes.errorMessage) {
+      dispatch(setError("Algo salio mal, por favor intentalo mas tarde."));
+      return null;
+    }
+    return registerRes.payload;
+  }
+);
+
 const authSlice = createSlice({
   name: "auth",
   initialState: {
@@ -76,6 +99,9 @@ const authSlice = createSlice({
     },
     [logout.fulfilled]: (state) => {
       state.user = null;
+    },
+    [register.fulfilled]: (state) => {
+      state.loading = false;
     },
   },
 });
