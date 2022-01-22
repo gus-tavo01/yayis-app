@@ -6,12 +6,11 @@ export const setToken = (token) => {
 
 export const get = async (params) => todosApi.get(`/v1/users`, { params });
 
-export const create = async () => {};
+export const update = async (userId, patch) =>
+  todosApi.patch(`/v1/users/${userId}`, patch);
 
-export const remove = async () => {};
+export const remove = async (userId) => todosApi.delete(`/v1/users/${userId}`);
 
-export const update = async () => {};
-
-const usersService = { create, remove, update, get, setToken };
+const usersService = { remove, update, get, setToken };
 
 export default usersService;
