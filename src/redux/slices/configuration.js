@@ -1,16 +1,18 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-
-import defaults from "../../constants/defaults";
+import usersService from "../../services/usersService";
 
 export const updateConfiguration = createAsyncThunk(
   "configuration/update",
   async (update, { dispatch, getState }) => {
     const { auth } = getState();
+
     if (auth.user) {
       dispatch(setLoading(true));
-      // service.update(user.id, update);
-      dispatch(setLoading(false));
-      // return response?.payload;
+      const { id } = auth.user;
+
+      await usersService.update(id, { configuration: update });
+      // TODO
+      // handle response
     }
 
     return update;
@@ -21,30 +23,30 @@ const configurationSlice = createSlice({
   name: "configuration",
   initialState: {
     loading: false,
-    language: defaults.language,
-    theme: defaults.theme,
+    language: "",
+    theme: "",
   },
   reducers: {
     setLoading: (state, action) => {
       state.loading = action.payload;
     },
-    setConfig: (state, action) => {
-      const { payload } = action;
-
+    setConfig: (state, { payload }) => {
+      state.language = payload.language;
+      state.theme = payload.theme;
       state.loading = false;
-      state.language = payload?.language || defaults.language;
-      state.theme = payload?.theme || defaults.theme;
     },
     clearConfig: (state) => {
+      state.language = "";
+      state.theme = "";
       state.loading = false;
-      state.language = defaults.language;
-      state.theme = defaults.theme;
     },
   },
   extraReducers: {
     [updateConfiguration.fulfilled]: (state, { payload }) => {
       if (payload.theme) state.theme = payload.theme;
       if (payload.language) state.language = payload.language;
+
+      state.loading = false;
     },
   },
 });
