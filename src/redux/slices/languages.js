@@ -1,15 +1,15 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import languagesService from "../../services/languagesService";
 
-import defaults from "../../constants/defaults";
-
-// async actions
 export const fetchLanguages = createAsyncThunk(
   "languages/fetch",
   async (params, { dispatch }) => {
     dispatch(setLoading(true));
     const response = await languagesService.get(params);
     dispatch(setLoading(false));
+
+    // TODO
+    // handle network error
 
     if (!navigator.onLine || response.errorMessage === "Network Error")
       return null;
@@ -18,7 +18,7 @@ export const fetchLanguages = createAsyncThunk(
     // const translatedMessage;
     // if response.errorMessage -> dispatch(setMessage(translatedMessage));
 
-    return response?.payload;
+    return response.payload?.docs;
   }
 );
 
@@ -26,7 +26,7 @@ const languagesSlice = createSlice({
   name: "languages",
   initialState: {
     loading: false,
-    items: [defaults.language],
+    items: [],
   },
   reducers: {
     setLoading: (state, action) => {
@@ -36,7 +36,7 @@ const languagesSlice = createSlice({
   extraReducers: {
     [fetchLanguages.fulfilled]: (state, action) => {
       if (action.payload) {
-        state.items = action.payload.docs;
+        state.items = action.payload;
       }
     },
   },

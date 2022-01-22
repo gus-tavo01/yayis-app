@@ -1,9 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import themesService from "../../services/themesService";
 
-import defaults from "../../constants/defaults";
-
-// async actions
 export const fetchThemes = createAsyncThunk(
   "themes/fetch",
   async (params, { dispatch, getState }) => {
@@ -11,6 +8,9 @@ export const fetchThemes = createAsyncThunk(
     const response = await themesService.get(params);
     dispatch(setLoading(false));
 
+    // TODO
+    // handle network error
+    // dispatch(alert("error", "Network error"));
     if (!navigator.onLine || response.errorMessage === "Network Error")
       return null;
 
@@ -19,7 +19,7 @@ export const fetchThemes = createAsyncThunk(
     // if (response.errorMessage) {}
     // dispatch(setMessage(translatedMessage));
 
-    return response?.payload;
+    return response.payload?.docs;
   }
 );
 
@@ -27,7 +27,7 @@ const themesSlice = createSlice({
   name: "themes",
   initialState: {
     loading: false,
-    items: [defaults.theme],
+    items: [],
   },
   reducers: {
     setLoading: (state, action) => {
@@ -37,7 +37,7 @@ const themesSlice = createSlice({
   extraReducers: {
     [fetchThemes.fulfilled]: (state, action) => {
       if (action.payload) {
-        state.items = action.payload.docs;
+        state.items = action.payload;
       }
     },
   },
