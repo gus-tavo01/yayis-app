@@ -36,11 +36,9 @@ const ConfigurationPage = () => {
       console.log("fetch languages");
       dispatch(fetchLanguages({}));
     }
-    if (!themes.items.length) {
-      console.log("fetch themes");
-      dispatch(fetchThemes({}));
-    }
-  }, [dispatch, languages, themes]);
+
+    dispatch(fetchThemes({}));
+  }, [dispatch, languages]);
 
   const handleOnLanguageChange = (selectedLanguage) => {
     dispatch(updateConfiguration({ language: selectedLanguage }));
@@ -77,11 +75,13 @@ const ConfigurationPage = () => {
 
         <Box display="flex" justifyContent="space-between">
           <Typography variant="subtitle2">Tema:</Typography>
-          <Typography variant="body2">{theme.name}</Typography>
+          <Typography variant="body2">
+            {theme?.name || "MUI default"}
+          </Typography>
         </Box>
         <Box display="flex" justifyContent="space-between">
           <Typography variant="subtitle2">Lenguage:</Typography>
-          <Typography variant="body2">{language.name}</Typography>
+          <Typography variant="body2">{language?.name || "Español"}</Typography>
         </Box>
 
         <Button
@@ -107,9 +107,9 @@ const ConfigurationPage = () => {
         onClose={handleOnUpdateClose}
         onThemeChange={handleOnThemeChange}
         onLanguageChange={handleOnLanguageChange}
-        theme={theme}
+        theme={theme?.code || ""}
         themes={themes.items}
-        language={language}
+        language={language?.code || ""}
         languages={languages.items}
       />
     </Box>
