@@ -35,8 +35,12 @@ export const login = createAsyncThunk(
     }
 
     const [user = null] = getProfileResponse.payload?.docs;
+    const userConfiguration = {
+      language: user?.configuration?.language,
+      theme: user?.configuration?.theme?.id,
+    };
 
-    dispatch(setConfig(user?.configuration));
+    dispatch(setConfig(userConfiguration));
 
     return user;
   }
