@@ -24,12 +24,12 @@ const UpdateConfigurationModal = ({
 }) => {
   const handleOnLanguageChange = ({ target }) => {
     const selected = languages.find((l) => l.code === target.value);
-    onlanguagechange(selected);
+    onlanguagechange(selected.id);
   };
 
   const handleOnThemeChange = ({ target }) => {
     const selected = themes.find((t) => t.code === target.value);
-    onThemeChange(selected);
+    onThemeChange(selected.id);
   };
 
   console.log("@@ Update modal render");
@@ -45,7 +45,7 @@ const UpdateConfigurationModal = ({
             labelId="languageId"
             label="Language"
             name="language"
-            value={language.code}
+            value={language}
             onChange={handleOnLanguageChange}
           >
             {languages.map((l) => (
@@ -61,7 +61,7 @@ const UpdateConfigurationModal = ({
             labelId="themeId"
             label="Theme"
             name="theme"
-            value={theme.code}
+            value={theme}
             onChange={handleOnThemeChange}
           >
             {themes.map((t) => (
